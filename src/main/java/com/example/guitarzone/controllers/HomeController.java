@@ -23,8 +23,7 @@ public class HomeController {
 
         return "contact";
     }
-
-    @GetMapping("/guitars")
+/* @GetMapping("/guitars")
     private String viewGuitar(){
 
         return "guitars";
@@ -57,4 +56,6 @@ public class HomeController {
 
         return "checkout";
     }
+* */
+
 }

@@ -296,6 +296,12 @@ a:focus {
 
 .slider_section .img-box img {
   width: 100%;
+  border-radius: 25px;
+}
+
+.about_section .img-box img{
+  width: 100%;
+  border-radius: 25px;
 }
 
 .slider_section .carousel-indicators {
