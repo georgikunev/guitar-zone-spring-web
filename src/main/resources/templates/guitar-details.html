@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}">
+</head>
+<body class="sub_page">
+
+<div class="hero_area">
+    <!-- header section starts -->
+    <header class="header_section long_section px-0" th:replace="~{fragments/navbar}">
+    </header>
+    <!-- end header section -->
+</div>
+
+<!-- product details section -->
+<section class="product_details_section layout_padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="img-box">
+                    <img src="images/a-guitar16.jpg" alt="Guitar Image">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="details-box">
+                    <h2>ESP LTD Arrow-200 Military Green Satin</h2>
+                    <p>Electric Guitar</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisi vel consectetur.</p>
+
+                    <div class="rating-summary">
+                        <div class="overall-rating">
+                            <h4>4.85 / 5</h4>
+                            <div class="stars">
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star-half-o checked"></span>
+                            </div>
+                            <p>Based on the number of reviews: 4</p>
+                        </div>
+                        <div class="rating-distribution">
+                            <div class="rating-bar">
+                                <span>5 <i class="fa fa-star"></i></span>
+                                <div class="bar"><div class="filled" style="width: 80%;"></div></div>
+                                <span>4</span>
+                            </div>
+                            <div class="rating-bar">
+                                <span>4 <i class="fa fa-star"></i></span>
+                                <div class="bar"><div class="filled" style="width: 0%;"></div></div>
+                                <span>0</span>
+                            </div>
+                            <div class="rating-bar">
+                                <span>3 <i class="fa fa-star"></i></span>
+                                <div class="bar"><div class="filled" style="width: 0%;"></div></div>
+                                <span>0</span>
+                            </div>
+                            <div class="rating-bar">
+                                <span>2 <i class="fa fa-star"></i></span>
+                                <div class="bar"><div class="filled" style="width: 0%;"></div></div>
+                                <span>0</span>
+                            </div>
+                            <div class="rating-bar">
+                                <span>1 <i class="fa fa-star"></i></span>
+                                <div class="bar"><div class="filled" style="width: 0%;"></div></div>
+                                <span>0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="price-box">
+                        <h6 class="price_heading"><span class="original_price">£ 699</span> </h6>
+                        <p class="stock_status"><i class="fa fa-check-circle"></i> In stock</p>
+                    </div>
+
+                    <div class="action_buttons">
+                        <a href="" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Buy Now</a>
+                        <a href="" class="btn btn-secondary"><i class="fa fa-heart"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- end product details section -->
+
+<!-- info section -->
+<section class="info_section long_section" th:replace="~{fragments/info}"></section>
+<!-- end info_section -->
+
+<!-- footer section -->
+<footer class="footer_section" th:replace="~{fragments/footer}"></footer>
+<!-- end footer section -->
+
+<div th:replace="~{fragments/script}"></div>
+</body>
+</html>

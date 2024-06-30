@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}">
+
+    <style>
+        .register-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f7f7f7;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        .register-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .register-container input[type="text"],
+        .register-container input[type="email"],
+        .register-container input[type="password"] {
+            width: 100%;
+            border: none;
+            height: 50px;
+            margin-bottom: 25px;
+            padding-left: 15px;
+            outline: none;
+            color: #101010;
+            box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        .register-container button {
+            border: none;
+            text-transform: uppercase;
+            display: inline-block;
+            padding: 12px 55px;
+            background-color: #6bb7be;
+            color: #ffffff;
+            border-radius: 0px;
+            border: 1px solid #6bb7be;
+            transition: all .2s;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .register-container button:hover {
+            background-color: transparent;
+            color: #6bb7be;
+        }
+
+        .register-container .form-footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .register-container .form-footer a {
+            color: #6bb7be;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .register-container .form-footer a:hover {
+            color: #f89646;
+        }
+    </style>
+</head>
+<body>
+
+<!-- header section strats -->
+<header class="header_section long_section px-0" th:replace="~{fragments/navbar}">
+
+</header>
+<!-- end header section -->
+
+
+<div class="register-container">
+    <div class="register-box">
+        <h2>Register</h2>
+        <form>
+            <input type="text" placeholder="Username" required>
+            <input type="email" placeholder="Email" required>
+            <input type="password" placeholder="Password" required>
+            <input type="password" placeholder="Confirm Password" required>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</div>
+
+<section class="info_section long_section" th:replace="~{fragments/info}">
+
+</section>
+
+<footer class="footer_section" th:replace="~{fragments/footer}">
+
+</footer>
+
+<div th:replace="~{fragments/script}"></div>
+
+</body>
+</html>
