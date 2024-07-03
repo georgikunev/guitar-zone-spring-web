@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head}">
-    <link rel="stylesheet" type="text/css" href="styles/checkout.css"/>
+
 </head>
 <body>
 <!-- Navigation Bar -->
-<header class="header_section long_section px-0" th:replace="~{fragments/navbar}"></header>
+<header th:replace="~{fragments/navbar}"></header>
 <!-- End Navigation Bar -->
 
 <!-- Checkout Section -->
@@ -126,7 +126,6 @@
 <section class="info_section long_section" th:replace="~{fragments/info}"></section>
 
 <footer class="footer_section" th:replace="~{fragments/footer}"></footer>
-<!-- End Footer Section -->
 
 <div th:replace="~{fragments/script}"></div>
 </body>

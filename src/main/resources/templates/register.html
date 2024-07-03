@@ -2,70 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head}">
 
-    <style>
-        .register-container {
-            max-width: 400px;
-            margin: 0 auto;
-            padding: 20px;
-            background: #f7f7f7;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-        }
 
-        .register-container h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        .register-container input[type="text"],
-        .register-container input[type="email"],
-        .register-container input[type="password"] {
-            width: 100%;
-            border: none;
-            height: 50px;
-            margin-bottom: 25px;
-            padding-left: 15px;
-            outline: none;
-            color: #101010;
-            box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.05);
-        }
-
-        .register-container button {
-            border: none;
-            text-transform: uppercase;
-            display: inline-block;
-            padding: 12px 55px;
-            background-color: #6bb7be;
-            color: #ffffff;
-            border-radius: 0px;
-            border: 1px solid #6bb7be;
-            transition: all .2s;
-            width: 100%;
-            cursor: pointer;
-        }
-
-        .register-container button:hover {
-            background-color: transparent;
-            color: #6bb7be;
-        }
-
-        .register-container .form-footer {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .register-container .form-footer a {
-            color: #6bb7be;
-            text-decoration: none;
-            text-transform: uppercase;
-        }
-
-        .register-container .form-footer a:hover {
-            color: #f89646;
-        }
-    </style>
 </head>
 <body>
 
@@ -79,11 +16,42 @@
 <div class="register-container">
     <div class="register-box">
         <h2>Register</h2>
-        <form>
-            <input type="text" placeholder="Username" required>
-            <input type="email" placeholder="Email" required>
-            <input type="password" placeholder="Password" required>
-            <input type="password" placeholder="Confirm Password" required>
+        <form th:action="@{/users/register}"
+              th:object="${registerData}"
+              method="post">
+            <div>
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" th:field="*{firstName}" required>
+                <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+            </div>
+
+            <div>
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" th:field="*{lastName}" required>
+                <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+            </div>
+
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" th:field="*{email}" required>
+                <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+            </div>
+
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" th:field="*{password}" required>
+                <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+            </div>
+
+            <div>
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword" th:field="*{confirmPassword}" required>
+                <div th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></div>
+                <div th:if="${#fields.hasErrors('password') and #fields.hasErrors('confirmPassword')}" class="error">
+                    Passwords do not match.
+                </div>
+            </div>
+
             <button type="submit">Register</button>
         </form>
     </div>
