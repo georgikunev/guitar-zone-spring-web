@@ -7,50 +7,44 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
 
     @GetMapping("/")
-    private String viewHome() {
+    public String viewHome() {
 
         return "index";
     }
 
     @GetMapping("/about")
-    private String viewAbout() {
+    public String viewAbout() {
 
         return "about";
     }
 
     @GetMapping("/contact")
-    private String viewContact() {
+    public String viewContact() {
 
         return "contact";
     }
 
-    @GetMapping("/guitars")
-    private String viewGuitar() {
-
-        return "guitars";
-    }
-
     @GetMapping("/cart")
-    private String viewCart() {
+    public String viewCart() {
 
         return "cart";
     }
 
     @GetMapping("/users/login")
-    private String viewLogin() {
+    public String viewLogin() {
 
         return "login";
     }
 
 
     @GetMapping("/guitar-details")
-    private String viewGuitarDetails() {
+    public String viewGuitarDetails() {
 
         return "guitar-details";
     }
 
     @GetMapping("/checkout")
-    private String viewCheckout() {
+    public String viewCheckout() {
 
         return "checkout";
     }

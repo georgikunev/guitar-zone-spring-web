@@ -14,7 +14,6 @@
     <!-- end header section -->
 </div>
 
-<!-- furniture section -->
 
 <section class="guitar_section layout_padding">
     <div class="container">
@@ -27,17 +26,17 @@
             </p>
         </div>
         <div class="row">
-            <div class="col-md-6 col-lg-4">
+            <div class="col-md-6 col-lg-4" th:each="product : ${products}" >
                 <div class="box">
                     <div class="img-box">
-                        <img src="images/a-guitar16.jpg" alt="Acoustic Guitar">
+                        <img th:src="${product.imageUrl}" alt="Acoustic Guitar">
                         <span class="deal-label"></span>
                     </div>
                     <div class="detail-box">
-                        <h5>
+                        <h5 th:text="${product.name}">
                             <a href="/guitar-details">ESP LTD Arrow-200 Military Green Satin</a>
                         </h5>
-                        <p>Electric Guitar</p>
+                        <p th:text="${product.type}">Electric Guitar</p>
                         <div class="rating-stock">
                             <div class="rating" data-product-id="123">
                                 <span class="fa fa-star" data-value="1"></span>
@@ -46,12 +45,13 @@
                                 <span class="fa fa-star" data-value="4"></span>
                                 <span class="fa fa-star" data-value="5"></span>
                             </div>
+                            <span th:text="${product.rating}"></span>
                         </div>
                         <div class="price_box">
                             <h6 class="price_heading">
-                                <span class="original_price">£ 699</span>
+                                <span class="original_price" th:text="${product.price}">£ 699</span>
                             </h6>
-                            <p class="stock_status">
+                            <p class="stock_status" th:text="${product.stockStatus}">
                                 <i class="fa fa-check-circle"></i> In stock
                             </p>
                         </div>
@@ -62,12 +62,11 @@
                     </div>
                 </div>
             </div>
-            <!-- Repeat the product boxes as needed -->
+
         </div>
     </div>
 </section>
 
-<!-- end furniture section -->
 
 <!-- info section -->
 <section class="info_section long_section" th:replace="~{fragments/info}">
