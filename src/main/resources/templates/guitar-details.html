@@ -13,68 +13,81 @@
 
 <!-- product details section -->
 <section class="product_details_section layout_padding">
-    <div class="container">
+    <div class="container" th:object="${productDetails}">
         <div class="row">
+
             <div class="col-lg-6">
                 <div class="img-box">
-                    <img src="images/a-guitar16.jpg" alt="Guitar Image">
+                    <img th:src="${productDetails.imageUrl}" alt="Guitar Image">
                 </div>
             </div>
+
             <div class="col-lg-6">
                 <div class="details-box">
-                    <h2>ESP LTD Arrow-200 Military Green Satin</h2>
-                    <p>Electric Guitar</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisi vel consectetur.</p>
-
-                    <div class="rating-summary">
-                        <div class="overall-rating">
-                            <h4>4.85 / 5</h4>
-                            <div class="stars">
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star-half-o checked"></span>
-                            </div>
-                            <p>Based on the number of reviews: 4</p>
-                        </div>
-                        <div class="rating-distribution">
-                            <div class="rating-bar">
-                                <span>5 <i class="fa fa-star"></i></span>
-                                <div class="bar"><div class="filled" style="width: 80%;"></div></div>
-                                <span>4</span>
-                            </div>
-                            <div class="rating-bar">
-                                <span>4 <i class="fa fa-star"></i></span>
-                                <div class="bar"><div class="filled" style="width: 0%;"></div></div>
-                                <span>0</span>
-                            </div>
-                            <div class="rating-bar">
-                                <span>3 <i class="fa fa-star"></i></span>
-                                <div class="bar"><div class="filled" style="width: 0%;"></div></div>
-                                <span>0</span>
-                            </div>
-                            <div class="rating-bar">
-                                <span>2 <i class="fa fa-star"></i></span>
-                                <div class="bar"><div class="filled" style="width: 0%;"></div></div>
-                                <span>0</span>
-                            </div>
-                            <div class="rating-bar">
-                                <span>1 <i class="fa fa-star"></i></span>
-                                <div class="bar"><div class="filled" style="width: 0%;"></div></div>
-                                <span>0</span>
-                            </div>
-                        </div>
-                    </div>
-
+                    <h2 th:text="*{name}">ESP LTD Arrow-200 Military Green Satin</h2>
+                    <p th:text="*{type}">Electric Guitar</p>
+                    <p th:text="*{description}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisi vel
+                        consectetur.</p>
                     <div class="price-box">
-                        <h6 class="price_heading"><span class="original_price">£ 699</span> </h6>
-                        <p class="stock_status"><i class="fa fa-check-circle"></i> In stock</p>
+                        <h6 class="price_heading"><span class="original_price" th:text="*{price}">£ 699</span></h6>
+                        <p class="stock_status"><i class="fa fa-check-circle" th:text="*{stockStatus}"></i></p>
                     </div>
 
                     <div class="action_buttons">
-                        <a href="" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Buy Now</a>
+                        <a href="" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Cart</a>
                         <a href="" class="btn btn-secondary"><i class="fa fa-heart"></i></a>
+                    </div>
+                </div>
+                <div class="rating-summary">
+                    <h4>Ratings</h4>
+                    <div class="overall-rating">
+                        <h4 th:text="*{rating}">4.85 / 5</h4>
+                        <div class="stars">
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                        </div>
+                        Based on the number of reviews:
+                        <p th:text="*{numberOfReviews}">17</p>
+                    </div>
+                    <div class="rating-distribution">
+                        <div class="rating-bar">
+                            <span>5 <i class="fa fa-star"></i></span>
+                            <div class="bar">
+                                <div class="filled" style="width: 88%;"></div>
+                            </div>
+                            <span class="rating-value">15</span>
+                        </div>
+                        <div class="rating-bar">
+                            <span>4 <i class="fa fa-star"></i></span>
+                            <div class="bar">
+                                <div class="filled" style="width: 12%;"></div>
+                            </div>
+                            <span class="rating-value">2</span>
+                        </div>
+                        <div class="rating-bar">
+                            <span>3 <i class="fa fa-star"></i></span>
+                            <div class="bar">
+                                <div class="filled" style="width: 0%;"></div>
+                            </div>
+                            <span class="rating-value">0</span>
+                        </div>
+                        <div class="rating-bar">
+                            <span>2 <i class="fa fa-star"></i></span>
+                            <div class="bar">
+                                <div class="filled" style="width: 0%;"></div>
+                            </div>
+                            <span class="rating-value">0</span>
+                        </div>
+                        <div class="rating-bar">
+                            <span>1 <i class="fa fa-star"></i></span>
+                            <div class="bar">
+                                <div class="filled" style="width: 0%;"></div>
+                            </div>
+                            <span class="rating-value">0</span>
+                        </div>
                     </div>
                 </div>
             </div>

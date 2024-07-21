@@ -592,6 +592,24 @@ a:focus {
     transition: all .2s;
 }
 
+/* Add this section to target the footer specifically in the About section */
+.about_section ~ .footer_section {
+    padding: 1px 0; /* Adjust as needed */
+    margin-top: 1px; /* Adjust as needed */
+}
+
+.footer_section {
+    color: #fff;
+    padding: 50px 0; /* Original padding */
+    text-align: center;
+}
+
+/* Ensure other pages maintain the default footer size */
+body:not(.about-page) .footer_section {
+    padding: 50px 0; /* Ensure original padding is applied elsewhere */
+}
+
+
 .about_section .detail-box a:hover {
     background-color: transparent;
     color: #6bb7be;
@@ -1208,7 +1226,7 @@ a:focus {
 
 .register-box button:hover {
     background-color: #5ca8ae; /* Darker shade on hover */
-
+}
 
     .product_details_section .img-box {
         text-align: center;
@@ -1283,7 +1301,7 @@ a:focus {
 
     .product_details_section .rating-summary .rating-bar .bar .filled {
         height: 100%;
-        background-color: #6a1b9a;
+        background-color: #6bb7be;
     }
 
     .product_details_section .price-box {
@@ -1416,7 +1434,128 @@ a:focus {
         font-size: 18px;
         font-weight: bold;
     }
+.product_details_section {
+    padding: 40px 0;
+}
 
+.img-box img {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.details-box {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.details-box h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.details-box p {
+    margin-bottom: 20px;
+}
+
+.price-box {
+    margin-top: 20px;
+}
+
+.price_heading {
+    font-size: 24px;
+    color: #e74c3c;
+}
+
+.stock_status {
+    color: #27ae60;
+    font-weight: bold;
+}
+
+.action_buttons {
+    margin-top: 20px;
+}
+
+.action_buttons a {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-right: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #fff;
+}
+
+.btn-primary {
+    background-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.rating-summary {
+    margin-top: 40px;
+}
+
+.rating-summary h4 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.rating-summary .stars {
+    color: #f39c12;
+}
+
+.rating-summary .fa-star-half-o {
+    color: #f39c12;
+}
+
+.rating-distribution {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.rating-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.rating-bar span {
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.rating-bar .bar {
+    flex-grow: 1;
+    background-color: #e9ecef;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 10px;
+    position: relative;
+}
+
+.rating-bar .bar .filled {
+    background-color: #6bb7be;
+    height: 100%;
+}
+
+.rating-bar .rating-value {
+    margin-left: 10px;
+    color: #333;
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -36,13 +36,6 @@ public class HomeController {
         return "login";
     }
 
-
-    @GetMapping("/guitar-details")
-    public String viewGuitarDetails() {
-
-        return "guitar-details";
-    }
-
     @GetMapping("/checkout")
     public String viewCheckout() {
 

@@ -1,9 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<body>
 <header class="header_section long_section px-0" th:fragment="navbar">
     <nav class="navbar navbar-expand-lg custom_nav-container">
         <a class="navbar-brand" href="/">
-          <span>
-            GuitarZone
-          </span>
+            <span>GuitarZone</span>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,7 +19,7 @@
                         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/about"> About</a>
+                        <a class="nav-link" href="/about">About</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/guitars">Guitars</a>
@@ -28,7 +30,8 @@
                 </ul>
             </div>
             <div class="quote_btn-container">
-                <div class="btn-group">
+                <!-- Show admin menu if user has ADMIN role -->
+                <div class="btn-group" sec:authorize="hasRole('ADMIN')">
                     <button type="button" class="btn btn-transparent dropdown-toggle" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
                         ADMIN
@@ -39,38 +42,38 @@
                         <a class="dropdown-item" href="manage-orders.html">Manage Orders</a>
                     </div>
                 </div>
-                <a href="/users/login">
-              <span>
-                Login
-              </span>
+
+                <!-- Show login and register links if user is not authenticated -->
+                <a href="/users/login" sec:authorize="!isAuthenticated()">
+                    <span>Login</span>
                     <i class="login" aria-hidden="true"></i>
                 </a>
-                <a href="/users/register">
-              <span>
-                Register
-              </span>
+                <a href="/users/register" sec:authorize="!isAuthenticated()">
+                    <span>Register</span>
                     <i class="register" aria-hidden="true"></i>
                 </a>
-                <div class="btn-group">
+
+                <!-- Show user icon and cart icon if user is authenticated -->
+                <div class="btn-group" sec:authorize="isAuthenticated()">
                     <button type="button" class="btn btn-transparent dropdown-toggle" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-user user-icon" aria-hidden="true"></i>
                     </button>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="/user/account">User Account</a>
-                        <a class="dropdown-item" href="/user/orders">Order History</a>
-                        <a class="dropdown-item" href="/user/wishlist">Wishlist</a>
+                    <div class="dropdown-menu dropdown-menu-right" >
+                        <a class="dropdown-item" href="/users/account">User Account</a>
+                        <a class="dropdown-item" href="/users/orders">Order History</a>
+                        <a class="dropdown-item" href="/users/wishlist">Wishlist</a>
+                        <form id="logout-form" th:action="@{/users/logout}" method="post">
+                            <button type="submit" class="dropdown-item">LOGOUT</button>
+                        </form>
                     </div>
                 </div>
-                <a href="/cart">
+                <a href="/cart" sec:authorize="isAuthenticated()">
                     <i class="fa fa-shopping-cart cart-icon" aria-hidden="true"></i>
                 </a>
-                <!-- <form class="form-inline">
-                  <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
-                    <i class="fa fa-search" aria-hidden="true"></i>
-                  </button>
-                </form> -->
             </div>
         </div>
     </nav>
 </header>
+</body>
+</html>

@@ -1,15 +1,17 @@
 package com.example.guitarzone.model.dtos;
 
-public class ShortProductInfoDTO {
+public class ProductDetailsDTO {
     private long id;
     private String name;
     private String type;
     private Double price;
+    private String description;
     private String stockStatus;
     private Double rating;
     private String imageUrl;
+    private Integer numberOfReviews;
 
-    public ShortProductInfoDTO() {
+    public ProductDetailsDTO() {
     }
 
     public long getId() {
@@ -66,5 +68,21 @@ public class ShortProductInfoDTO {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Integer getNumberOfReviews() {
+        return numberOfReviews;
+    }
+
+    public void setNumberOfReviews(Integer numberOfReviews) {
+        this.numberOfReviews = numberOfReviews;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

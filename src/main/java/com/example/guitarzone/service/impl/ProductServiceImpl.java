@@ -1,5 +1,6 @@
 package com.example.guitarzone.service.impl;
 
+import com.example.guitarzone.model.dtos.ProductDetailsDTO;
 import com.example.guitarzone.model.dtos.ShortProductInfoDTO;
 import com.example.guitarzone.model.entities.Product;
 import com.example.guitarzone.repositories.ProductRepository;
@@ -31,11 +32,20 @@ public class ProductServiceImpl implements ProductService {
     public List<ShortProductInfoDTO> getAllProducts() {
         List<Product> products = productRepository.findAll();
         logger.debug("Fetched products: {}", products);
-        return products.stream().map(this::mapToInfo).toList();
+        return products.stream().map(this::mapToShortInfo).toList();
     }
 
-    private ShortProductInfoDTO mapToInfo(Product product) {
+    @Override
+    public ProductDetailsDTO getProductDetails(Long id) {
+        return productRepository.findById(id).map(this::mapToDetailsInfo).orElseThrow();
+    }
+
+    private ShortProductInfoDTO mapToShortInfo(Product product) {
 
         return modelMapper.map(product, ShortProductInfoDTO.class);
+    }
+    private ProductDetailsDTO mapToDetailsInfo(Product product) {
+
+        return modelMapper.map(product, ProductDetailsDTO.class);
     }
 }
