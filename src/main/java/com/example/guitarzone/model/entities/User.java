@@ -22,8 +22,8 @@ public class User {
     @Email
     @Column(nullable = false, unique = true)
     private String email;
-    @Column(unique = true)
-    private String phone;
+    @Column(name = "phone_number", unique = true)
+    private String phoneNumber;
     @Column(nullable = false)
     private String password;
     @ManyToMany(fetch = FetchType.EAGER)
@@ -76,12 +76,12 @@ public class User {
         this.email = email;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getPassword() {

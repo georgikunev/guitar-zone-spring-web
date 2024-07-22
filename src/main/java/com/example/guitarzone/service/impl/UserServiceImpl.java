@@ -1,5 +1,6 @@
 package com.example.guitarzone.service.impl;
 
+import com.example.guitarzone.model.dtos.UserAccountInfoDTO;
 import com.example.guitarzone.model.dtos.UserRegistrationDTO;
 import com.example.guitarzone.model.entities.User;
 import com.example.guitarzone.repositories.UserRepository;
@@ -36,6 +37,31 @@ public class UserServiceImpl implements UserService {
         this.userRepository.save(map(userRegistrationDTO));
 
         return true;
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("User not found"));
+    }
+
+    @Override
+    public void updateUserAccount(String email, UserAccountInfoDTO userAccountInfoDTO) {
+        User existingUser = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with email: " + email));
+
+        // Map DTO to existing user entity
+        modelMapper.map(userAccountInfoDTO, existingUser);
+
+        userRepository.save(existingUser);
+    }
+
+    @Override
+    public UserAccountInfoDTO getAccountDetails(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("No user found with email " + email));
+        UserAccountInfoDTO dto = new UserAccountInfoDTO();
+        modelMapper.map(user, dto);
+        return dto;
     }
 
     private User map(UserRegistrationDTO userRegistrationDTO) {

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}">
+    <title>User Account</title>
+</head>
+<body class="sub_page">
+
+<div class="hero_area">
+    <!-- header section starts -->
+    <header class="header_section long_section px-0" th:replace="~{fragments/navbar}">
+    </header>
+    <!-- end header section -->
+</div>
+
+<!-- user account section -->
+<section class="user_account_section layout_padding">
+    <div class="container">
+        <div class="heading_container">
+            <h2>User Account</h2>
+            <p>Edit your account details</p>
+        </div>
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="form_container">
+                    <form th:action="@{/users/account}" method="post" th:object="${userAccountInfoDTO}">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" class="form-control" id="firstName" th:field="*{firstName}" required>
+                            <div class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" class="form-control" id="lastName" th:field="*{lastName}" required>
+                            <div class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phoneNumber">Phone Number</label>
+                            <input type="text" id="phoneNumber" th:field="*{phoneNumber}" class="form-control"/>
+                            <div class="error" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}" >Phone error</div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                        <div th:if="${success}">
+                            <div class="alert alert-success">
+                                <p th:text="${success}">Success message goes here.</p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end user account section -->
+
+<!-- info section -->
+<section class="info_section long_section" th:replace="~{fragments/info}"></section>
+<!-- end info_section -->
+
+<!-- footer section -->
+<footer class="footer_section" th:replace="~{fragments/footer}"></footer>
+<!-- end footer section -->
+
+<div th:replace="~{fragments/script}"></div>
+
+</body>
+</html>

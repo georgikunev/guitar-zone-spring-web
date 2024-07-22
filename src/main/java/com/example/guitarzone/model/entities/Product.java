@@ -23,14 +23,15 @@ public class Product {
     @Column(nullable = false)
     private Double price;
 
-    @Column(nullable = false)
+    @Column(name = "stock_status", nullable = false)
     private String stockStatus;
 
     private Double rating = 0.0;
 
+    @Column(name = "number_of_reviews")
     private Integer numberOfReviews = 0;
 
-    @Column(nullable = false)
+    @Column(name = "image_url", nullable = false)
     private String imageUrl;
 
     @OneToMany(mappedBy = "product")
