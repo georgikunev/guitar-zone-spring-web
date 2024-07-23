@@ -1557,5 +1557,23 @@ body:not(.about-page) .footer_section {
     margin-left: 10px;
     color: #333;
 }
+.product-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Centering items */
+    text-align: center;  /* Centering text */
+    border: 1px solid #ddd;  /* Adding a border for clarity */
+    padding: 15px;  /* Adding some padding */
+    margin: 15px;  /* Adding some margin */
+    background: #f9f9f9; /* Adding background color */
+}
+.product-info {
+    display: flex;
+    justify-content: space-between; /* Ensuring proper space between items */
+    align-items: center; /* Centering items vertically */
+    width: 100%; /* Full width */
+    margin-top: 15px; /* Adding some space above */
+}
+
 
 /*# sourceMappingURL=style.css.map */

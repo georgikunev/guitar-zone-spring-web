@@ -38,10 +38,19 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Review> reviews;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "wishlist",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+    private Set<Product> wishlist;
+
     public User() {
         this.orders = new ArrayList<>();
         this.reviews = new ArrayList<>();
         this.roles = new HashSet<>();
+        this.wishlist = new HashSet<>();
     }
 
     public long getId() {
@@ -112,5 +121,13 @@ public class User {
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public Set<Product> getWishlist() {
+        return wishlist;
+    }
+
+    public void setWishlist(Set<Product> wishlist) {
+        this.wishlist = wishlist;
     }
 }

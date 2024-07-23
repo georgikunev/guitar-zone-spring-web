@@ -34,7 +34,12 @@
 
                     <div class="action_buttons">
                         <a href="" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Cart</a>
-                        <a href="" class="btn btn-secondary"><i class="fa fa-heart"></i></a>
+                        <form th:action="@{/users/wishlist/add}" method="post">
+                            <input type="hidden" name="productId" th:value="${productDetails.id}">
+                            <button type="submit" class="btn btn-secondary">
+                                <i class="fa fa-heart"></i> <!-- Adding the Font Awesome heart icon -->
+                            </button>
+                        </form>
                     </div>
                 </div>
                 <div class="rating-summary">

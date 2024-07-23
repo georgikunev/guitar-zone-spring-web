@@ -10,6 +10,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 public class AppUserDetailsServiceImpl implements UserDetailsService {
     private final UserRepository userRepository;
@@ -18,23 +21,22 @@ public class AppUserDetailsServiceImpl implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-
-        return  userRepository
-                .findByEmail(email)
-                .map(AppUserDetailsServiceImpl::map)
-                .orElseThrow(() -> new UsernameNotFoundException("User with email " + email + " not found"));
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+        return toUserDetails(user);
     }
 
-    private static UserDetails map(User user) {
-        return org.springframework.security.core.userdetails.User.withUsername(user.getEmail())
-                .password(user.getPassword())
-                .authorities(user.getRoles().stream().map(Role::getRole).map(AppUserDetailsServiceImpl::map).toList())
-                .disabled(false)
-                .build();
+    private UserDetails toUserDetails(User user) {
+        List<GrantedAuthority> authorities = user.getRoles().stream()
+                .map(Role::getRole)  // Assuming Role has a getName method to return the name of the role.
+                .map(roleName -> new SimpleGrantedAuthority("ROLE_" + roleName))
+                .collect(Collectors.toList());
+
+        return new CustomUserDetails(user, authorities);
     }
-    private static GrantedAuthority map(UserRole role) {
+
+    private static GrantedAuthority toGrantedAuthority(UserRole role) {
         return new SimpleGrantedAuthority(
                 "ROLE_" + role
         );

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}">
+    <title>Wishlist</title>
+</head>
+<body class="sub_page">
+<div th:replace="~{fragments/navbar}"></div>
+
+<section class="wishlist_section">
+    <div class="container">
+        <h2>Your Wishlist</h2>
+        <div class="row">
+            <div th:each="product : ${wishlistItems}" class="col-md-4">
+                <div class="product-item">
+                    <img th:src="@{/images/{imageUrl}(imageUrl=${product.imageUrl})}" alt="Product Image" th:alt="${product.name}">
+                    <h4 th:text="${product.name}">Product Name</h4>
+                    <div class="product-info">
+                        <p class="product-price" th:text="${product.price}">Product Price</p>
+                        <form th:action="@{/users/wishlist/remove}" method="post" class="remove-button">
+                            <input type="hidden" name="productId" th:value="${product.id}">
+                            <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Remove</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="info_section long_section" th:replace="~{fragments/info}"></section>
+
+<div th:replace="~{fragments/footer}"></div>
+
+<div th:replace="~{fragments/script}"></div>
+</body>
+</html>
