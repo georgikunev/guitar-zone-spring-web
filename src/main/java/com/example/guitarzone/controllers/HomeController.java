@@ -24,12 +24,6 @@ public class HomeController {
         return "contact";
     }
 
-    @GetMapping("/cart")
-    public String viewCart() {
-
-        return "cart";
-    }
-
     @GetMapping("/users/login")
     public String viewLogin() {
 

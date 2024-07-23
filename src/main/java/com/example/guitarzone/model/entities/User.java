@@ -38,6 +38,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Review> reviews;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Cart cart;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "wishlist",
@@ -51,6 +54,8 @@ public class User {
         this.reviews = new ArrayList<>();
         this.roles = new HashSet<>();
         this.wishlist = new HashSet<>();
+        this.cart = new Cart();
+        this.cart.setUser(this);
     }
 
     public long getId() {
@@ -121,6 +126,14 @@ public class User {
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
     public Set<Product> getWishlist() {

@@ -1,94 +1,51 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head}">
-
-
+    <title>Shopping Cart</title>
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <header class="header_section long_section px-0" th:replace="~{fragments/navbar}">
+<!-- Navigation Bar -->
+<header class="header_section long_section px-0" th:replace="~{fragments/navbar}">
+</header>
+<!-- End Navigation Bar -->
 
-    </header>
-    <!-- End Navigation Bar -->
-
-    <!-- Cart Section -->
-    <div class="layout_padding">
-        <div class="cart-container">
-            <h2>Shopping Cart</h2>
-            <div class="cart-item">
-                <img src="images/a-guitar16.jpg" alt="Item 1">
-                <div class="cart-item-details">
-                    <div class="cart-item-name">Product Name 1</div>
-                    <div class="cart-item-price">$10.00</div>
-                </div>
-                <div class="cart-item-quantity">
-                    <button class="quantity-btn" onclick="changeQuantity(this, -1)">-</button>
-                    <input type="text" value="1" readonly>
-                    <button class="quantity-btn" onclick="changeQuantity(this, 1)">+</button>
-                </div>
-                <div class="cart-item-remove" onclick="removeItem(this)">Remove</div>
+<!-- Cart Section -->
+<div class="layout_padding">
+    <div class="cart-container">
+        <h2>Shopping Cart</h2>
+        <div th:each="item : ${cart.items}" class="cart-item">
+            <img th:src="@{/images/{imageUrl}(imageUrl=${item.product.imageUrl})}" alt="Product Image">
+            <div class="cart-item-details">
+                <div class="cart-item-name" th:text="${item.product.name}">Product Name</div>
+                <div class="cart-item-price" th:text="${item.price}">Product Price</div>
+                <div class="cart-item-stock-status" th:text="${item.product.stockStatus}"></div>
             </div>
-
-            <div class="cart-item">
-                <img src="path_to_image.jpg" alt="Item 2">
-                <div class="cart-item-details">
-                    <div class="cart-item-name">Product Name 2</div>
-                    <div class="cart-item-price">$20.00</div>
-                </div>
-                <div class="cart-item-quantity">
-                    <button class="quantity-btn" onclick="changeQuantity(this, -1)">-</button>
-                    <input type="text" value="1" readonly>
-                    <button class="quantity-btn" onclick="changeQuantity(this, 1)">+</button>
-                </div>
-                <div class="cart-item-remove" onclick="removeItem(this)">Remove</div>
+            <div class="cart-item-quantity">
+                <form th:action="@{/cart/decrement}" method="post" style="display: inline;">
+                    <input type="hidden" name="itemId" th:value="${item.productId}">
+                    <button type="submit" class="quantity-btn">-</button>
+                </form>
+                <span th:text="${item.quantity}"></span>
+                <form th:action="@{/cart/increment}" method="post" style="display: inline;">
+                    <input type="hidden" name="itemId" th:value="${item.productId}">
+                    <button type="submit" class="quantity-btn">+</button>
+                </form>
             </div>
-
-            <div class="cart-total">
-                Total: $30.00
-            </div>
-            <a class="checkout-btn" href="/checkout">Checkout</a>
-<!--            <button class="checkout-btn">Checkout</button>-->
+            <form th:action="@{/cart/remove}" method="post" class="cart-item-remove">
+                <input type="hidden" name="itemId" th:value="${item.productId}">
+                <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Remove</button>
+            </form>
         </div>
+        <div class="cart-total" th:text="'Total: $' + ${cart.total}"></div>
+        <a class="checkout-btn" href="/checkout">Checkout</a>
     </div>
+</div>
 
-    <section class="info_section long_section" th:replace="~{fragments/info}">
+<section class="info_section long_section" th:replace="~{fragments/info}"></section>
 
-    </section>
+<footer class="footer_section" th:replace="~{fragments/footer}"></footer>
+<!-- footer section -->
 
-	<footer class="footer_section" th:replace="~{fragments/footer}">
-  </footer>
-  <!-- footer section -->
-
-    <script>
-        function changeQuantity(button, change) {
-            var quantityInput = button.parentElement.querySelector('input');
-            var currentQuantity = parseInt(quantityInput.value);
-            var newQuantity = currentQuantity + change;
-            if (newQuantity > 0) {
-                quantityInput.value = newQuantity;
-                updateTotal();
-            }
-        }
-
-        function removeItem(button) {
-            var cartItem = button.parentElement;
-            cartItem.remove();
-            updateTotal();
-        }
-
-        function updateTotal() {
-            var cartItems = document.querySelectorAll('.cart-item');
-            var total = 0;
-            cartItems.forEach(function(item) {
-                var priceElement = item.querySelector('.cart-item-price');
-                var price = parseFloat(priceElement.textContent.replace('$', ''));
-                var quantity = parseInt(item.querySelector('input').value);
-                total += price * quantity;
-            });
-            document.querySelector('.cart-total').textContent = 'Total: $' + total.toFixed(2);
-        }
-    </script>
-    <div th:replace="~{fragments/script}"></div>
+<div th:replace="~{fragments/script}"></div>
 </body>
-
 </html>

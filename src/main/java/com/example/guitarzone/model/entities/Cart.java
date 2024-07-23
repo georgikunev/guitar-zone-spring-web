@@ -1,7 +1,6 @@
 package com.example.guitarzone.model.entities;
 
 import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,19 +11,16 @@ public class Cart {
     private Long id;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CartItem> items;
+    private List<CartItem> items = new ArrayList<>();
 
     @Column(nullable = false)
-    private Double total;
+    private Double total = 0.0;
 
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Cart() {
-        this.total = 0.0;
-        this.items = new ArrayList<>();
-    }
+    public Cart() {}
 
     public Long getId() {
         return id;
