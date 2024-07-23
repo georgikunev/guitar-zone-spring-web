@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}">
+    <title>Order History</title>
+</head>
+<body>
+<!-- Navigation Bar -->
+<header th:replace="~{fragments/navbar}"></header>
+<!-- End Navigation Bar -->
+
+<!-- Order History Section -->
+<div class="layout_padding">
+    <div class="order-history-container">
+        <h2>Order History</h2>
+        <div th:each="order : ${orders}" class="order-item">
+            <h3 th:text="'Order #' + ${order.id}"></h3>
+            <p th:text="'Order Date: ' + ${order.orderDate}"></p>
+            <div th:each="item : ${order.orderItems}" class="order-item-details">
+                <div class="order-item-name" th:text="${item.productName}">Product Name</div>
+                <div class="order-item-quantity" th:text="'Quantity: ' + ${item.quantity}">Quantity</div>
+                <div class="order-item-price" th:text="'Price: $' + ${item.price}">Price</div>
+            </div>
+            <div class="order-total" th:text="'Total: $' + ${order.totalAmount}">Total: $0.00</div>
+        </div>
+    </div>
+</div>
+
+<section class="info_section long_section" th:replace="~{fragments/info}"></section>
+
+<footer class="footer_section" th:replace="~{fragments/footer}"></footer>
+
+<div th:replace="~{fragments/script}"></div>
+</body>
+</html>

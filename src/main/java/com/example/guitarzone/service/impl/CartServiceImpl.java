@@ -45,13 +45,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void addItemToCart(Long userId, Long productId, int quantity) {
-        Cart cart = cartRepository.findByUserId(userId).orElseGet(() -> {
-            User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-            Cart newCart = new Cart();
-            newCart.setUser(user);
-            return cartRepository.save(newCart);
-        });
-
+        Cart cart = getCartEntityByUserId(userId);
         Product product = productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
 
         Optional<CartItem> existingItem = cart.getItems().stream()
@@ -75,30 +69,62 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void updateCartItemQuantity(Long userId, Long itemId, int quantity) {
-        Cart cart = cartRepository.findByUserId(userId).orElseThrow(() -> new RuntimeException("Cart not found"));
-        CartItem item = cart.getItems().stream()
-                .filter(cartItem -> cartItem.getId().equals(itemId))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("CartItem not found"));
-
-        item.setQuantity(quantity);
-        updateCartTotal(cart);
-        cartRepository.save(cart);
-    }
-
-    @Override
     public void removeItemFromCart(Long userId, Long itemId) {
-        Cart cart = cartRepository.findByUserId(userId).orElseThrow(() -> new RuntimeException("Cart not found"));
-        CartItem item = cart.getItems().stream()
-                .filter(cartItem -> cartItem.getId().equals(itemId))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("CartItem not found"));
+        Cart cart = getCartEntityByUserId(userId);
+        CartItem item = findCartItemById(cart, itemId);
 
         cart.getItems().remove(item);
         item.setCart(null);
         updateCartTotal(cart);
         cartRepository.save(cart);
+    }
+
+    @Override
+    public void incrementCartItem(Long userId, Long itemId) {
+        Cart cart = getCartEntityByUserId(userId);
+        CartItem item = findCartItemById(cart, itemId);
+
+        item.setQuantity(item.getQuantity() + 1);
+        updateCartTotal(cart);
+        cartRepository.save(cart);
+    }
+
+    @Override
+    public void decrementCartItem(Long userId, Long itemId) {
+        Cart cart = getCartEntityByUserId(userId);
+        CartItem item = findCartItemById(cart, itemId);
+
+        if (item.getQuantity() > 1) {
+            item.setQuantity(item.getQuantity() - 1);
+            updateCartTotal(cart);
+            cartRepository.save(cart);
+        } else {
+            removeItemFromCart(userId, itemId);
+        }
+    }
+
+    @Override
+    public void clearCart(Long userId) {
+        Cart cart = getCartEntityByUserId(userId);
+        cart.getItems().clear();
+        updateCartTotal(cart);
+        cartRepository.save(cart);
+    }
+
+    private Cart getCartEntityByUserId(Long userId) {
+        return cartRepository.findByUserId(userId).orElseGet(() -> {
+            User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+            Cart newCart = new Cart();
+            newCart.setUser(user);
+            return cartRepository.save(newCart);
+        });
+    }
+
+    private CartItem findCartItemById(Cart cart, Long itemId) {
+        return cart.getItems().stream()
+                .filter(cartItem -> cartItem.getId().equals(itemId))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("CartItem not found"));
     }
 
     private void updateCartTotal(Cart cart) {
@@ -107,16 +133,19 @@ public class CartServiceImpl implements CartService {
     }
 
     private CartDTO mapToDTO(Cart cart) {
-        CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
-        cartDTO.setItems(cart.getItems().stream()
-                .map(this::mapToDTO)
-                .collect(Collectors.toList()));
+        CartDTO cartDTO = new CartDTO();
+        cartDTO.setTotal(cart.getTotal());
+        cartDTO.setItems(cart.getItems().stream().map(this::mapToDTO).collect(Collectors.toList()));
         return cartDTO;
     }
 
     private CartItemDTO mapToDTO(CartItem item) {
-        CartItemDTO cartItemDTO = modelMapper.map(item, CartItemDTO.class);
-        cartItemDTO.setProduct(modelMapper.map(item.getProduct(), ProductInCartDTO.class));
-        return cartItemDTO;
+        CartItemDTO itemDTO = new CartItemDTO();
+        itemDTO.setProductId(item.getId());
+        itemDTO.setProduct(modelMapper.map(item.getProduct(), ProductInCartDTO.class));
+        itemDTO.setPrice(item.getPrice());
+        itemDTO.setQuantity(item.getQuantity());
+        itemDTO.setSubtotal(item.getSubtotal());
+        return itemDTO;
     }
 }

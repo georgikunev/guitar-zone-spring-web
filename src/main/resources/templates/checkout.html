@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head}">
-
+    <title>Checkout</title>
 </head>
 <body>
 <!-- Navigation Bar -->
@@ -12,114 +12,106 @@
 <div class="layout_padding">
     <div class="checkout-container">
         <h2>Checkout</h2>
-
-        <form id="checkout-form">
-            <!-- User Information -->
-            <div class="section">
-                <h3>User Information</h3>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="first-name">First Name</label>
-                        <input type="text" id="first-name" name="first-name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="last-name">Last Name</label>
-                        <input type="text" id="last-name" name="last-name" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Phone</label>
-                        <input type="tel" id="phone" name="phone" required>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Shipping Address -->
-            <div class="section">
-                <h3>Shipping Address</h3>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="address">Address</label>
-                        <input type="text" id="address" name="address" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="country">Country</label>
-                        <input type="text" id="country" name="country" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="city">City</label>
-                        <input type="text" id="city" name="city" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="zip">Zip Code</label>
-                        <input type="text" id="zip" name="zip" required>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Payment Details -->
-            <div class="section">
-                <h3>Payment Details</h3>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="card-name">Name on Card</label>
-                        <input type="text" id="card-name" name="card-name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="card-number">Card Number</label>
-                        <input type="text" id="card-number" name="card-number" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="expiry">Expiry Date</label>
-                        <input type="text" id="expiry" name="expiry" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="cvv">CVV</label>
-                        <input type="text" id="cvv" name="cvv" required>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Order Summary -->
-            <div class="section">
-                <h3>Order Summary</h3>
-                <div class="cart-summary">
-                    <div class="cart-item">
-                        <img src="images/a-guitar16.jpg" alt="Item 1">
-                        <div class="cart-item-details">
-                            <div class="cart-item-name">Product Name 1</div>
-                            <div class="cart-item-price">$10.00</div>
+        <div th:if="${isCartEmpty}">
+            <p>Your cart is empty. <a href="/guitars">Continue shopping</a></p>
+        </div>
+        <div th:if="${not isCartEmpty}">
+            <form th:action="@{/checkout}" method="post">
+                <!-- User Information -->
+                <div class="section">
+                    <h3>User Information</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="first-name">First Name</label>
+                            <input type="text" id="first-name" name="firstName" required>
                         </div>
-                        <div class="cart-item-quantity">Quantity: 1</div>
-                    </div>
-
-                    <div class="cart-item">
-                        <img src="path_to_image.jpg" alt="Item 2">
-                        <div class="cart-item-details">
-                            <div class="cart-item-name">Product Name 2</div>
-                            <div class="cart-item-price">$20.00</div>
+                        <div class="form-group">
+                            <label for="last-name">Last Name</label>
+                            <input type="text" id="last-name" name="lastName" required>
                         </div>
-                        <div class="cart-item-quantity">Quantity: 1</div>
                     </div>
-
-                    <div class="cart-total">
-                        Total: $30.00
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <button type="submit" class="checkout-btn">Place Order</button>
-        </form>
+                <!-- Shipping Address -->
+                <div class="section">
+                    <h3>Shipping Address</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <input type="text" id="address" name="address" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <input type="text" id="country" name="country" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" id="city" name="city" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="zip">Zip Code</label>
+                            <input type="text" id="zip" name="zip" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Details -->
+                <div class="section">
+                    <h3>Payment Details</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="card-name">Name on Card</label>
+                            <input type="text" id="card-name" name="cardName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="card-number">Card Number</label>
+                            <input type="text" id="card-number" name="cardNumber" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="expiry">Expiry Date</label>
+                            <input type="text" id="expiry" name="expiry" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cvv">CVV</label>
+                            <input type="text" id="cvv" name="cvv" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="section">
+                    <h3>Order Summary</h3>
+                    <div class="cart-summary" th:each="item : ${cart.items}">
+                        <div class="cart-item">
+                            <img th:src="@{/images/{imageUrl}(imageUrl=${item.product.imageUrl})}" alt="Product Image">
+                            <div class="cart-item-details">
+                                <div class="cart-item-name" th:text="${item.product.name}">Product Name</div>
+                                <div class="cart-item-price" th:text="${item.price}">Product Price</div>
+                            </div>
+                            <div class="cart-item-quantity" th:text="'Quantity: ' + ${item.quantity}"></div>
+                        </div>
+                    </div>
+                    <div class="cart-total" th:text="'Total: $' + ${cart.total}"></div>
+                </div>
+
+                <button type="submit" class="checkout-btn">Place Order</button>
+            </form>
+        </div>
     </div>
 </div>
 

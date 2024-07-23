@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequestMapping("/cart")
 public class CartController {
 
     private final CartService cartService;
@@ -18,28 +19,34 @@ public class CartController {
         this.cartService = cartService;
     }
 
-    @GetMapping("/cart")
+    @GetMapping
     public String viewCart(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
-        CartDTO cartDTO = cartService.getCartByUserId(userDetails.getId());
-        model.addAttribute("cart", cartDTO);
+        CartDTO cart = cartService.getCartByUserId(userDetails.getId());
+        model.addAttribute("cart", cart);
         return "cart";
     }
 
-    @PostMapping("/cart/add")
-    public String addItemToCart(@RequestParam Long productId, @RequestParam int quantity, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    @PostMapping("/add")
+    public String addToCart(@RequestParam Long productId, @RequestParam Integer quantity, @AuthenticationPrincipal CustomUserDetails userDetails) {
         cartService.addItemToCart(userDetails.getId(), productId, quantity);
         return "redirect:/cart";
     }
 
-    @PostMapping("/cart/update")
-    public String updateItemQuantity(@RequestParam Long itemId, @RequestParam int quantity, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        cartService.updateCartItemQuantity(userDetails.getId(), itemId, quantity);
+    @PostMapping("/remove")
+    public String removeFromCart(@RequestParam Long itemId, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        cartService.removeItemFromCart(userDetails.getId(), itemId);
         return "redirect:/cart";
     }
 
-    @PostMapping("/cart/remove")
-    public String removeItemFromCart(@RequestParam Long itemId, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        cartService.removeItemFromCart(userDetails.getId(), itemId);
+    @PostMapping("/increment")
+    public String incrementCartItem(@RequestParam Long itemId, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        cartService.incrementCartItem(userDetails.getId(), itemId);
+        return "redirect:/cart";
+    }
+
+    @PostMapping("/decrement")
+    public String decrementCartItem(@RequestParam Long itemId, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        cartService.decrementCartItem(userDetails.getId(), itemId);
         return "redirect:/cart";
     }
 }

@@ -23,8 +23,11 @@ public class Product {
     @Column(nullable = false)
     private Double price;
 
-    @Column(name = "stock_status", nullable = false)
-    private String stockStatus;
+    @Column(nullable = false)
+    private Integer quantity;  // New field for quantity in stock
+
+    @Transient  // Not persisted in the database
+    private String stockStatus;  // Derived field
 
     private Double rating = 0.0;
 
@@ -41,6 +44,13 @@ public class Product {
         this.reviews = new ArrayList<>();
     }
 
+    @PostLoad
+    @PostPersist
+    @PostUpdate
+    public void updateStockStatus() {
+        this.stockStatus = (this.quantity > 0) ? "in stock" : "out of stock";
+    }
+
     public Long getId() {
         return id;
     }
@@ -55,6 +65,14 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public String getDescription() {

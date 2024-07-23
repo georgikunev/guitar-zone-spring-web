@@ -30,6 +30,12 @@ public class UserController {
         return new UserRegistrationDTO();
     }
 
+    @GetMapping("/login")
+    public String viewLogin() {
+
+        return "login";
+    }
+
     @GetMapping("/register")
     public String viewRegister() {
 

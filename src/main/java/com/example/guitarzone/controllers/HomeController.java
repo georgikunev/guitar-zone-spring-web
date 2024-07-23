@@ -23,18 +23,4 @@ public class HomeController {
 
         return "contact";
     }
-
-    @GetMapping("/users/login")
-    public String viewLogin() {
-
-        return "login";
-    }
-
-    @GetMapping("/checkout")
-    public String viewCheckout() {
-
-        return "checkout";
-    }
-
-
 }
