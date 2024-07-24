@@ -12,106 +12,117 @@
 <div class="layout_padding">
     <div class="checkout-container">
         <h2>Checkout</h2>
-        <div th:if="${isCartEmpty}">
-            <p>Your cart is empty. <a href="/guitars">Continue shopping</a></p>
-        </div>
-        <div th:if="${not isCartEmpty}">
-            <form th:action="@{/checkout}" method="post">
-                <!-- User Information -->
-                <div class="section">
-                    <h3>User Information</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="first-name">First Name</label>
-                            <input type="text" id="first-name" name="firstName" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="last-name">Last Name</label>
-                            <input type="text" id="last-name" name="lastName" required>
-                        </div>
+        <form id="checkout-form" th:action="@{/checkout}" method="post" th:object="${orderDTO}">
+            <!-- User Information -->
+            <div class="section">
+                <h3>User Information</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="first-name">First Name</label>
+                        <input type="text" id="first-name" th:field="*{firstName}" required>
+                        <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Phone</label>
-                            <input type="tel" id="phone" name="phone" required>
-                        </div>
+                    <div class="form-group">
+                        <label for="last-name">Last Name</label>
+                        <input type="text" id="last-name" th:field="*{lastName}" required>
+                        <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
                     </div>
                 </div>
-
-                <!-- Shipping Address -->
-                <div class="section">
-                    <h3>Shipping Address</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="address">Address</label>
-                            <input type="text" id="address" name="address" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="country">Country</label>
-                            <input type="text" id="country" name="country" required>
-                        </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" th:field="*{email}" required>
+                        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="city">City</label>
-                            <input type="text" id="city" name="city" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="zip">Zip Code</label>
-                            <input type="text" id="zip" name="zip" required>
-                        </div>
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone" th:field="*{phone}" required>
+                        <div th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Payment Details -->
-                <div class="section">
-                    <h3>Payment Details</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="card-name">Name on Card</label>
-                            <input type="text" id="card-name" name="cardName" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="card-number">Card Number</label>
-                            <input type="text" id="card-number" name="cardNumber" required>
-                        </div>
+            <!-- Shipping Address -->
+            <div class="section">
+                <h3>Shipping Address</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" id="address" th:field="*{address}" required>
+                        <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="expiry">Expiry Date</label>
-                            <input type="text" id="expiry" name="expiry" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="cvv">CVV</label>
-                            <input type="text" id="cvv" name="cvv" required>
-                        </div>
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <input type="text" id="country" th:field="*{country}" required>
+                        <div th:if="${#fields.hasErrors('country')}" th:errors="*{country}"></div>
                     </div>
                 </div>
-
-                <!-- Order Summary -->
-                <div class="section">
-                    <h3>Order Summary</h3>
-                    <div class="cart-summary" th:each="item : ${cart.items}">
-                        <div class="cart-item">
-                            <img th:src="@{/images/{imageUrl}(imageUrl=${item.product.imageUrl})}" alt="Product Image">
-                            <div class="cart-item-details">
-                                <div class="cart-item-name" th:text="${item.product.name}">Product Name</div>
-                                <div class="cart-item-price" th:text="${item.price}">Product Price</div>
-                            </div>
-                            <div class="cart-item-quantity" th:text="'Quantity: ' + ${item.quantity}"></div>
-                        </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" th:field="*{city}" required>
+                        <div th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></div>
                     </div>
-                    <div class="cart-total" th:text="'Total: $' + ${cart.total}"></div>
+                    <div class="form-group">
+                        <label for="zip">Zip Code</label>
+                        <input type="text" id="zip" th:field="*{zip}" required>
+                        <div th:if="${#fields.hasErrors('zip')}" th:errors="*{zip}"></div>
+                    </div>
                 </div>
+            </div>
 
-                <button type="submit" class="checkout-btn">Place Order</button>
-            </form>
-        </div>
+            <!-- Payment Details -->
+            <div class="section">
+                <h3>Payment Details</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="card-name">Name on Card</label>
+                        <input type="text" id="card-name" th:field="*{cardName}" required>
+                        <div th:if="${#fields.hasErrors('cardName')}" th:errors="*{cardName}"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="card-number">Card Number</label>
+                        <input type="text" id="card-number" th:field="*{cardNumber}" required>
+                        <div th:if="${#fields.hasErrors('cardNumber')}" th:errors="*{cardNumber}"></div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="expiry-month">Expiry Date</label>
+                        <div class="expiry-container">
+                            <input type="text" id="expiry-month" maxlength="2" placeholder="MM" required>
+                            /
+                            <input type="text" id="expiry-year" maxlength="2" placeholder="YY" required>
+                        </div>
+                        <input type="hidden" id="expiry" th:field="*{expiry}" required>
+                        <div th:if="${#fields.hasErrors('expiry')}" th:errors="*{expiry}"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cvv">CVV</label>
+                        <input type="number" id="cvv" class="short-input" th:field="*{cvv}" maxlength="4" placeholder="CVV" required>
+                        <div th:if="${#fields.hasErrors('cvv')}" th:errors="*{cvv}"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="section">
+                <h3>Order Summary</h3>
+                <div class="cart-summary" th:each="item : ${cart.items}">
+                    <div class="cart-item">
+                        <img th:src="@{/images/{imageUrl}(imageUrl=${item.product.imageUrl})}" alt="Product Image">
+                        <div class="cart-item-details">
+                            <div class="cart-item-name" th:text="${item.product.name}">Product Name</div>
+                            <div class="cart-item-price" th:text="${item.price}">Product Price</div>
+                        </div>
+                        <div class="cart-item-quantity" th:text="'Quantity: ' + ${item.quantity}"></div>
+                    </div>
+                </div>
+                <div class="cart-total" th:text="'Total: $' + ${cart.total}"></div>
+            </div>
+
+            <button type="submit" class="checkout-btn">Place Order</button>
+        </form>
     </div>
 </div>
 
@@ -120,5 +131,13 @@
 <footer class="footer_section" th:replace="~{fragments/footer}"></footer>
 
 <div th:replace="~{fragments/script}"></div>
+
+<script>
+    document.getElementById('checkout-form').addEventListener('submit', function(event) {
+        var month = document.getElementById('expiry-month').value;
+        var year = document.getElementById('expiry-year').value;
+        document.getElementById('expiry').value = month + '/' + year;
+    });
+</script>
 </body>
 </html>

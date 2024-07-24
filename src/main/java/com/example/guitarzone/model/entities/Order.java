@@ -1,7 +1,5 @@
 package com.example.guitarzone.model.entities;
 
-import com.example.guitarzone.model.embeddable.Address;
-import com.example.guitarzone.model.embeddable.PaymentDetails;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -23,18 +21,23 @@ public class Order {
     private User user;
 
     @Column(nullable = false)
-    @Embedded
-    private Address shippingAddress;
+    private String address;
 
     @Column(nullable = false)
-    @Embedded
-    private PaymentDetails paymentDetails;
+    private String country;
+
+    @Column(nullable = false)
+    private String city;
+
+    @Column(nullable = false)
+    private String zip;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;
 
     @Column(nullable = false)
     private Double totalAmount;
+
 
     public Order() {
         this.orderItems = new ArrayList<>();
@@ -64,22 +67,6 @@ public class Order {
         this.user = user;
     }
 
-    public Address getShippingAddress() {
-        return shippingAddress;
-    }
-
-    public void setShippingAddress(Address shippingAddress) {
-        this.shippingAddress = shippingAddress;
-    }
-
-    public PaymentDetails getPaymentDetails() {
-        return paymentDetails;
-    }
-
-    public void setPaymentDetails(PaymentDetails paymentDetails) {
-        this.paymentDetails = paymentDetails;
-    }
-
     public List<OrderItem> getOrderItems() {
         return orderItems;
     }
@@ -94,5 +81,37 @@ public class Order {
 
     public void setTotalAmount(Double totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public void setZip(String zip) {
+        this.zip = zip;
     }
 }

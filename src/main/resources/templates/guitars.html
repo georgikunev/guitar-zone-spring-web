@@ -1,19 +1,25 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{fragments/head}">
-
+    <title>Our Guitars</title>
+    <style>
+        .out-of-stock {
+            filter: grayscale(100%);
+            pointer-events: none;
+            opacity: 0.6;
+        }
+    </style>
 </head>
 
 <body class="sub_page">
 
 <div class="hero_area">
-    <!-- header section strats -->
+    <!-- header section starts -->
     <header class="header_section long_section px-0" th:replace="~{fragments/navbar}">
     </header>
     <!-- end header section -->
 </div>
-
 
 <section class="guitar_section layout_padding">
     <div class="container">
@@ -22,12 +28,13 @@
                 Our Guitars
             </h2>
             <p>
-                Explore our wide selection of guitars, perfect for every skill level and style. Whether you are a beginner or a professional, we have the right guitar for you.
+                Explore our wide selection of guitars, perfect for every skill level and style. Whether you are a
+                beginner or a professional, we have the right guitar for you.
             </p>
         </div>
         <div class="row">
-            <div class="col-md-6 col-lg-4" th:each="product : ${products}" >
-                <div class="box">
+            <div class="col-md-6 col-lg-4" th:each="product : ${products}">
+                <div class="box" th:classappend="${product.stockStatus == 'out of stock'} ? 'out-of-stock' : ''">
                     <div class="img-box">
                         <img th:src="@{/images/{imageUrl}(imageUrl=${product.imageUrl})}" alt="guitar image">
                         <span class="deal-label"></span>
@@ -36,7 +43,7 @@
                         <h5>
                             <a th:href="@{/guitars/guitar-details/{id}(id=*{product.id})}" th:text="${product.name}">guitar</a>
                         </h5>
-                        <p th:text="${product.type}">guitar type</p>
+                        <span class="guitar_type" th:text="${product.type}">guitar type</span>
                         <div class="rating-stock">
                             <div class="rating" data-product-id="123">
                                 <span class="fa fa-star" data-value="1"></span>
@@ -59,7 +66,11 @@
                             <form th:action="@{/cart/add}" method="post">
                                 <input type="hidden" name="productId" th:value="${product.id}">
                                 <input type="hidden" name="quantity" value="1">
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add To Cart</button>
+                                <button type="submit" class="btn btn-primary"
+                                        th:classappend="${product.stockStatus == 'out of stock'} ? 'btn-disabled' : ''"
+                                        th:disabled="${product.stockStatus == 'out of stock'}">
+                                    <i class="fa fa-shopping-cart"></i> Add To Cart
+                                </button>
                             </form>
                             <form th:action="@{/users/wishlist/add}" method="post">
                                 <input type="hidden" name="productId" th:value="${product.id}">
@@ -71,18 +82,15 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </section>
-
 
 <!-- info section -->
 <section class="info_section long_section" th:replace="~{fragments/info}">
 
 </section>
 <!-- end info_section -->
-
 
 <!-- footer section -->
 <footer class="footer_section" th:replace="~{fragments/footer}">
@@ -93,16 +101,16 @@
 <div th:replace="~{fragments/script}"></div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const stars = document.querySelectorAll('.rating .fa-star');
         stars.forEach(star => {
-            star.addEventListener('click', function() {
+            star.addEventListener('click', function () {
                 const ratingValue = this.getAttribute('data-value');
                 const productId = this.parentElement.getAttribute('data-product-id');
 
                 // Highlight the clicked stars
                 stars.forEach(s => s.classList.remove('checked'));
-                for(let i = 0; i < ratingValue; i++) {
+                for (let i = 0; i < ratingValue; i++) {
                     stars[i].classList.add('checked');
                 }
 

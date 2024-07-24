@@ -41,7 +41,9 @@
                 </form>
             </div>
             <div class="cart-total" th:text="'Total: $' + ${cart.total}"></div>
-            <a th:href="@{/checkout}" class="checkout-btn">Checkout</a>
+            <form th:action="@{/cart/proceed-to-checkout}" method="post">
+                <button type="submit" class="checkout-btn">Checkout</button>
+            </form>
         </div>
     </div>
 </div>

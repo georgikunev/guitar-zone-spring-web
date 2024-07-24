@@ -562,6 +562,10 @@ a:focus {
     color: #888;
 }
 
+.guitar_section .box .detail-box .guitar-type {
+    color: #0c0c0c;
+}
+
 .about_section {
     background-color: #f9fafa;
 }
@@ -1574,6 +1578,21 @@ body:not(.about-page) .footer_section {
     width: 100%; /* Full width */
     margin-top: 15px; /* Adding some space above */
 }
+.expiry-container {
+    display: flex;
+    align-items: center;
+}
+
+.expiry-container input {
+    width: 50px;
+    text-align: center;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+.short-input {
+    width: 80px;
+}
+
 
 
 /*# sourceMappingURL=style.css.map */

@@ -42,14 +42,15 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order();
         order.setUser(user);
         order.setOrderDate(LocalDateTime.now());
-        order.setShippingAddress(orderDTO.getShippingAddress());
-        order.setPaymentDetails(orderDTO.getPaymentDetails());
+        order.setAddress(orderDTO.getAddress());
+        order.setCountry(orderDTO.getCountry());
+        order.setCity(orderDTO.getCity());
+        order.setZip(orderDTO.getZip());
         order.setTotalAmount(cartDTO.getTotal());
 
         List<OrderItem> orderItems = cartDTO.getItems().stream().map(cartItemDTO -> {
             Product product = productRepository.findById(cartItemDTO.getProduct().getId()).orElseThrow(() -> new RuntimeException("Product not found"));
 
-            // Reduce stock
             if (product.getQuantity() > 0) {
                 product.setQuantity(product.getQuantity() - cartItemDTO.getQuantity());
                 if (product.getQuantity() == 0) {
@@ -71,7 +72,6 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderItems(orderItems);
         orderRepository.save(order);
 
-        // Clear the cart after placing the order
         cartService.clearCart(userId);
     }
 
@@ -82,3 +82,4 @@ public class OrderServiceImpl implements OrderService {
                 .collect(Collectors.toList());
     }
 }
+
