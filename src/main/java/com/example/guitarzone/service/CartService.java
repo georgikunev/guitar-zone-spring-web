@@ -10,5 +10,7 @@ public interface CartService {
     void clearCart(Long userId);  // Add this method to clear the cart
     void incrementCartItem(Long userId, Long itemId);
     void decrementCartItem(Long userId, Long itemId);
+    void updateCartTotal(Cart cart);
+    Cart getCartEntityByUserId(Long userId);
 
 }

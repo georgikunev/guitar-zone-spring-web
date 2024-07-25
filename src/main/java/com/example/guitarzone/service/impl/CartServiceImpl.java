@@ -111,7 +111,8 @@ public class CartServiceImpl implements CartService {
         cartRepository.save(cart);
     }
 
-    private Cart getCartEntityByUserId(Long userId) {
+    @Override
+    public Cart getCartEntityByUserId(Long userId) {
         return cartRepository.findByUserId(userId).orElseGet(() -> {
             User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
             Cart newCart = new Cart();
@@ -127,7 +128,8 @@ public class CartServiceImpl implements CartService {
                 .orElseThrow(() -> new RuntimeException("CartItem not found"));
     }
 
-    private void updateCartTotal(Cart cart) {
+    @Override
+    public void updateCartTotal(Cart cart) {
         double total = cart.getItems().stream().mapToDouble(CartItem::getSubtotal).sum();
         cart.setTotal(total);
     }

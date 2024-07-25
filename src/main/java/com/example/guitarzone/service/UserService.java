@@ -13,9 +13,5 @@ public interface UserService {
     User findByEmail(String email);
     void updateUserAccount(String email, UserAccountInfoDTO userAccountInfoDTO);
     UserAccountInfoDTO getAccountDetails(String email);
-    Set<Product> getWishlistItems(Long userId);
-    void addToWishlist(Long userId, Long productId);
-
-    void removeFromWishlist(Long userId, Long productId);
 
 }
