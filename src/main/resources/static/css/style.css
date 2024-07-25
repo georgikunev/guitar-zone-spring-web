@@ -505,12 +505,6 @@ a:focus {
     color: #ffdd00;
 }
 
-.guitar_section .box .detail-box .stock_status {
-    color: #28a745;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-}
 
 .guitar_section .box .detail-box .price_box {
     display: flex;
@@ -536,6 +530,9 @@ a:focus {
     align-items: center;
     margin-top: 0; /* Ensure alignment with price */
 }
+.guitar_section .box .detail-box .price_box .stock_status.out-of-stock {
+    color: #dc3545; /* Red color for out of stock */
+} 
 
 .guitar_section .box .detail-box .action_buttons {
     display: flex;
@@ -1470,12 +1467,7 @@ body:not(.about-page) .footer_section {
 
 .price_heading {
     font-size: 24px;
-    color: #e74c3c;
-}
-
-.stock_status {
-    color: #27ae60;
-    font-weight: bold;
+    color: black;
 }
 
 .action_buttons {
@@ -1647,7 +1639,4 @@ body:not(.about-page) .footer_section {
     max-width: 900px;
     margin: 0 auto;
 }
-
-
-
 /*# sourceMappingURL=style.css.map */

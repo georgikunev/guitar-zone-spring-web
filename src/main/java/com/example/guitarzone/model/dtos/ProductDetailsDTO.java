@@ -1,12 +1,13 @@
 package com.example.guitarzone.model.dtos;
 
 public class ProductDetailsDTO {
-    private long id;
+    private Long id;
     private String name;
     private String type;
     private Double price;
     private String description;
     private String stockStatus;
+    private Integer quantity;
     private Double rating;
     private String imageUrl;
     private Integer numberOfReviews;
@@ -14,11 +15,19 @@ public class ProductDetailsDTO {
     public ProductDetailsDTO() {
     }
 
-    public long getId() {
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -44,24 +44,17 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void addItemToCart(Long userId, Long productId, int quantity) {
+    public String addItemToCart(Long userId, Long productId, int quantity) {
         Cart cart = getCartEntityByUserId(userId);
         Product product = productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
-
-        if (quantity > product.getQuantity()) {
-            throw new IllegalArgumentException("Quantity exceeds available stock for product: " + product.getName());
-        }
 
         Optional<CartItem> existingItem = cart.getItems().stream()
                 .filter(item -> item.getProduct().getId().equals(productId))
                 .findFirst();
 
         if (existingItem.isPresent()) {
-            CartItem item = existingItem.get();
-            if (item.getQuantity() + quantity > product.getQuantity()) {
-                throw new IllegalArgumentException("Quantity exceeds available stock for product: " + product.getName());
-            }
-            item.setQuantity(item.getQuantity() + quantity);
+            // If the item is already in the cart, do not increment the quantity, just return a message
+            return "Product already in cart";
         } else {
             CartItem item = new CartItem();
             item.setProduct(product);
@@ -73,6 +66,8 @@ public class CartServiceImpl implements CartService {
 
         updateCartTotal(cart);
         cartRepository.save(cart);
+
+        return "Product added to cart";
     }
 
     @Override

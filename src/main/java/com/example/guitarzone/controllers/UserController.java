@@ -2,7 +2,6 @@ package com.example.guitarzone.controllers;
 
 import com.example.guitarzone.model.dtos.UserAccountInfoDTO;
 import com.example.guitarzone.model.dtos.UserRegistrationDTO;
-import com.example.guitarzone.model.entities.User;
 import com.example.guitarzone.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -13,7 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.security.Principal;
 
 @Controller
 @RequestMapping("/users")
@@ -79,13 +77,13 @@ public class UserController {
         return "user-account";
     }
 
+    //TODO Separate names and phone number input fields
     @PostMapping("/account")
     public String updateAccount(@ModelAttribute("userAccountDTO") @Valid UserAccountInfoDTO userAccountInfoDTO,
                                 BindingResult bindingResult,
                                 @AuthenticationPrincipal UserDetails userDetails,
                                 Model model,
                                 RedirectAttributes redirectAttributes) {
-        //TODO
         if (bindingResult.hasErrors()) {
             // Handling validation errors
             model.addAttribute("userAccountInfoDTO", userAccountInfoDTO); // Add form back to the model to retain form data

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}">
+    <title>Manage Products</title>
+</head>
+<body class="sub_page">
+
+<div class="hero_area">
+    <!-- header section starts -->
+    <header class="header_section long_section px-0" th:replace="~{fragments/navbar}">
+    </header>
+    <!-- end header section -->
+</div>
+
+<section class="guitar_section layout_padding">
+    <div class="container">
+        <div class="heading_container">
+            <h2>Manage Products</h2>
+        </div>
+        <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+        <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+        <div class="row">
+            <div class="col-md-6 col-lg-4" th:each="product : ${products}">
+                <div class="box">
+                    <div class="img-box">
+                        <img th:src="@{/images/{imageUrl}(imageUrl=${product.imageUrl})}" alt="guitar image">
+                    </div>
+                    <div class="detail-box">
+                        <h5 th:text="${product.name}">Product Name</h5>
+                        <span th:text="${product.type}">Product Type</span>
+                        <div class="price_box">
+                            <h6 th:text="${product.price}">£0.00</h6>
+                            <p th:text="${product.stockStatus}"></p>
+                        </div>
+                        <div class="action_buttons">
+                            <form th:action="@{/admin/products/edit}" method="get">
+                                <input type="hidden" name="id" th:value="${product.id}">
+                                <button type="submit" class="btn btn-primary">Edit</button>
+                            </form>
+                            <form th:action="@{/admin/products/remove}" method="post">
+                                <input type="hidden" name="id" th:value="${product.id}">
+                                <button type="submit" class="btn btn-danger">Remove</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Add new product button -->
+            <div class="col-md-6 col-lg-4">
+                <div class="box">
+                    <div class="img-box add-new">
+                        <a th:href="@{/admin/products/new}" class="btn btn-success"><i class="fa fa-plus"></i> Add New Product</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="info_section long_section" th:replace="~{fragments/info}"></section>
+
+<footer class="footer_section" th:replace="~{fragments/footer}"></footer>
+
+<div th:replace="~{fragments/script}"></div>
+</body>
+</html>

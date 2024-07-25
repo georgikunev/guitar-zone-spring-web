@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -40,12 +39,29 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findById(id).map(this::mapToDetailsInfo).orElseThrow();
     }
 
-    private ShortProductInfoDTO mapToShortInfo(Product product) {
+    @Override
+    public void updateProduct(ProductDetailsDTO productDetailsDTO) {
+        Product product = productRepository.findById(productDetailsDTO.getId())
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+        modelMapper.map(productDetailsDTO, product);
+        productRepository.save(product);
+    }
+    @Override
+    public void removeProduct(Long id) {
+        productRepository.deleteById(id);
+    }
 
+    @Override
+    public void saveProduct(ProductDetailsDTO productDetailsDTO) {
+        Product product = modelMapper.map(productDetailsDTO, Product.class);
+        productRepository.save(product);
+    }
+
+    private ShortProductInfoDTO mapToShortInfo(Product product) {
         return modelMapper.map(product, ShortProductInfoDTO.class);
     }
-    private ProductDetailsDTO mapToDetailsInfo(Product product) {
 
+    private ProductDetailsDTO mapToDetailsInfo(Product product) {
         return modelMapper.map(product, ProductDetailsDTO.class);
     }
 }

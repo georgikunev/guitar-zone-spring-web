@@ -8,7 +8,9 @@ import java.util.List;
 public interface ProductService {
 
     List<ShortProductInfoDTO> getAllProducts();
-
     ProductDetailsDTO getProductDetails(Long id);
+    void updateProduct(ProductDetailsDTO productDetailsDTO);
+    void removeProduct(Long id);
+    void saveProduct(ProductDetailsDTO productDetailsDTO);
 
 }

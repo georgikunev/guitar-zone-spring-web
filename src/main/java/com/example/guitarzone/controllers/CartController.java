@@ -9,6 +9,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/cart")
@@ -32,10 +33,17 @@ public class CartController {
     @PostMapping("/add")
     public String addItemToCart(@AuthenticationPrincipal CustomUserDetails userDetails,
                                 @RequestParam Long productId,
-                                @RequestParam int quantity) {
+                                @RequestParam int quantity,
+                                RedirectAttributes redirectAttributes) {
         Long userId = userService.findByEmail(userDetails.getUsername()).getId();
-        cartService.addItemToCart(userId, productId, quantity);
-        return "redirect:/cart";
+        String message = cartService.addItemToCart(userId, productId, quantity);
+
+        if ("Product already in cart".equals(message)) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Product is already in your cart.");
+        } else {
+            redirectAttributes.addFlashAttribute("successMessage", "Product added to your cart.");
+        }
+        return "redirect:/guitars";  // Redirect to guitars page or any other page you prefer
     }
 
     @PostMapping("/remove")
