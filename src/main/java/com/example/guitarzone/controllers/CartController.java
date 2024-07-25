@@ -2,7 +2,6 @@ package com.example.guitarzone.controllers;
 
 import com.example.guitarzone.model.dtos.CartDTO;
 import com.example.guitarzone.model.dtos.OrderDTO;
-import com.example.guitarzone.model.entities.Cart;
 import com.example.guitarzone.service.CartService;
 import com.example.guitarzone.service.UserService;
 import com.example.guitarzone.service.impl.CustomUserDetails;
@@ -49,10 +48,16 @@ public class CartController {
 
     @PostMapping("/increment")
     public String incrementCartItem(@AuthenticationPrincipal CustomUserDetails userDetails,
-                                    @RequestParam Long itemId) {
+                                    @RequestParam Long itemId, Model model) {
         Long userId = userService.findByEmail(userDetails.getUsername()).getId();
-        cartService.incrementCartItem(userId, itemId);
-        return "redirect:/cart";
+        try {
+            cartService.incrementCartItem(userId, itemId);
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+        }
+        CartDTO cart = cartService.getCartByUserId(userId);
+        model.addAttribute("cart", cart);
+        return "cart";
     }
 
     @PostMapping("/decrement")

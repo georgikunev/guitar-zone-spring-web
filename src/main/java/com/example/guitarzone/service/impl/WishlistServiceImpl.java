@@ -46,4 +46,11 @@ public class WishlistServiceImpl implements WishlistService {
         userRepository.save(user);
     }
 
+    @Override
+    public void clearWishlist(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        user.getWishlist().clear();
+        userRepository.save(user);
+    }
+
 }

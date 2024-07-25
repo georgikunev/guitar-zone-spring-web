@@ -48,12 +48,19 @@ public class CartServiceImpl implements CartService {
         Cart cart = getCartEntityByUserId(userId);
         Product product = productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
 
+        if (quantity > product.getQuantity()) {
+            throw new IllegalArgumentException("Quantity exceeds available stock for product: " + product.getName());
+        }
+
         Optional<CartItem> existingItem = cart.getItems().stream()
                 .filter(item -> item.getProduct().getId().equals(productId))
                 .findFirst();
 
         if (existingItem.isPresent()) {
             CartItem item = existingItem.get();
+            if (item.getQuantity() + quantity > product.getQuantity()) {
+                throw new IllegalArgumentException("Quantity exceeds available stock for product: " + product.getName());
+            }
             item.setQuantity(item.getQuantity() + quantity);
         } else {
             CartItem item = new CartItem();
@@ -83,6 +90,11 @@ public class CartServiceImpl implements CartService {
     public void incrementCartItem(Long userId, Long itemId) {
         Cart cart = getCartEntityByUserId(userId);
         CartItem item = findCartItemById(cart, itemId);
+        Product product = item.getProduct();
+
+        if (item.getQuantity() + 1 > product.getQuantity()) {
+            throw new IllegalArgumentException("Quantity exceeds available stock for product: " + product.getName());
+        }
 
         item.setQuantity(item.getQuantity() + 1);
         updateCartTotal(cart);

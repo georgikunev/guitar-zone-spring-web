@@ -13,6 +13,7 @@ public class UserAccountInfoDTO {
     @Size(max = 25, message = "Last name should not be more than 25 characters")
     private String lastName;
 
+    //TODO
     @Pattern(regexp = "^\\+?[0-9. ()-]{7,25}$", message = "Phone number is invalid")
     private String phoneNumber;
 
