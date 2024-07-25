@@ -2,6 +2,7 @@ package com.example.guitarzone.controllers;
 
 import com.example.guitarzone.model.dtos.CartDTO;
 import com.example.guitarzone.model.dtos.OrderDTO;
+import com.example.guitarzone.model.entities.Order;
 import com.example.guitarzone.service.CartService;
 import com.example.guitarzone.service.OrderService;
 import com.example.guitarzone.service.UserService;
@@ -14,6 +15,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 @Controller
 public class OrderController {
@@ -57,7 +60,8 @@ public class OrderController {
     @GetMapping("/users/orders")
     public String getOrderHistory(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         Long userId = userService.findByEmail(userDetails.getUsername()).getId();
-        model.addAttribute("orders", orderService.getOrderHistory(userId));
+        List<Order> orders = orderService.getOrderHistory(userId);
+        model.addAttribute("orders", orders);
         return "order-history";
     }
 }

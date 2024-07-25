@@ -3,32 +3,35 @@
 <head th:replace="~{fragments/head}">
     <title>Order History</title>
 </head>
-<body>
-<!-- Navigation Bar -->
-<header th:replace="~{fragments/navbar}"></header>
-<!-- End Navigation Bar -->
+<body class="sub_page">
+<div th:replace="~{fragments/navbar}"></div>
 
-<!-- Order History Section -->
-<div class="layout_padding">
-    <div class="order-history-container">
-        <h2>Order History</h2>
-        <div th:each="order : ${orders}" class="order-item">
-            <h3 th:text="'Order #' + ${order.id}"></h3>
-            <p th:text="'Order Date: ' + ${order.orderDate}"></p>
-            <div th:each="item : ${order.orderItems}" class="order-item-details">
-                <div class="order-item-name" th:text="${item.productName}">Product Name</div>
-                <div class="order-item-quantity" th:text="'Quantity: ' + ${item.quantity}">Quantity</div>
-                <div class="order-item-price" th:text="'Price: $' + ${item.price}">Price</div>
+<section class="order_history_section">
+    <div class="container">
+        <h2>Your Order History</h2>
+        <div th:if="${#lists.isEmpty(orders)}">
+            <p>You have no orders. <a href="/guitars">Start shopping now!</a></p>
+        </div>
+        <div th:if="${not #lists.isEmpty(orders)}">
+            <div th:each="order : ${orders}" class="order-item">
+                <h3>Order #<span th:text="${order.id}"></span></h3>
+                <p>Date: <span th:text="${#dates.format(order.orderDate, 'dd-MM-yyyy HH:mm')}"></span></p>
+                <p>Total Amount: $<span th:text="${order.totalAmount}"></span></p>
+                <h4>Items:</h4>
+                <ul>
+                    <li th:each="item : ${order.orderItems}">
+                        <span class="item-name" th:text="${item.product.name}"></span>
+                        <span class="item-quantity" th:text="'x ' + ${item.quantity}"></span>
+                        <span class="item-price" th:text="'$' + ${item.price}"></span>
+                    </li>
+                </ul>
             </div>
-            <div class="order-total" th:text="'Total: $' + ${order.totalAmount}">Total: $0.00</div>
         </div>
     </div>
-</div>
+</section>
 
 <section class="info_section long_section" th:replace="~{fragments/info}"></section>
-
-<footer class="footer_section" th:replace="~{fragments/footer}"></footer>
-
+<div th:replace="~{fragments/footer}"></div>
 <div th:replace="~{fragments/script}"></div>
 </body>
 </html>

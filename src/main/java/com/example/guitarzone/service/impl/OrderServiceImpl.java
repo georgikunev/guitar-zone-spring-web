@@ -14,7 +14,7 @@ import com.example.guitarzone.service.OrderService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,7 +41,7 @@ public class OrderServiceImpl implements OrderService {
 
         Order order = new Order();
         order.setUser(user);
-        order.setOrderDate(LocalDateTime.now());
+        order.setOrderDate(Instant.now());
         order.setAddress(orderDTO.getAddress());
         order.setCountry(orderDTO.getCountry());
         order.setCity(orderDTO.getCity());
@@ -76,10 +76,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDTO> getOrderHistory(Long userId) {
-        return orderRepository.findByUserId(userId).stream()
-                .map(order -> modelMapper.map(order, OrderDTO.class))
-                .collect(Collectors.toList());
+    public List<Order> getOrderHistory(Long userId) {
+        return orderRepository.findByUserId(userId);
     }
 }
 

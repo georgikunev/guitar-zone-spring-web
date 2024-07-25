@@ -1593,6 +1593,61 @@ body:not(.about-page) .footer_section {
     width: 80px;
 }
 
+.order_history_section {
+    padding: 50px 0;
+    background-color: #f9f9f9;
+}
+.order-item {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.order-item h3 {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+.order-item p {
+    margin: 5px 0;
+    font-size: 1rem;
+}
+.order-item h4 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 1.25rem;
+}
+.order-item ul {
+    list-style: none;
+    padding: 0;
+}
+.order-item ul li {
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+.order-item ul li span {
+    display: inline-block;
+}
+.order-item .item-name {
+    flex: 1 1 auto;
+}
+.order-item .item-quantity {
+    flex: 0 0 50px;
+    text-align: center;
+}
+.order-item .item-price {
+    flex: 0 0 80px;
+    text-align: right;
+}
+.alert {
+    margin-bottom: 20px;
+}
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
 
 
 /*# sourceMappingURL=style.css.map */

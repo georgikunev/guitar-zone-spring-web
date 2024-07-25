@@ -2,7 +2,7 @@ package com.example.guitarzone.model.entities;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +14,7 @@ public class Order {
     private Long id;
 
     @Column(nullable = false)
-    private LocalDateTime orderDate;
+    private Instant orderDate;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -51,11 +51,11 @@ public class Order {
         this.id = id;
     }
 
-    public LocalDateTime getOrderDate() {
+    public Instant getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(LocalDateTime orderDate) {
+    public void setOrderDate(Instant orderDate) {
         this.orderDate = orderDate;
     }
 
