@@ -20,6 +20,7 @@ public class ProductController {
         this.productService = productService;
     }
 
+    //TODO Create loading logic for guitars so that loading all products when entering the could be prevented
     @GetMapping
     public String viewGuitar(Model model) {
         List<ShortProductInfoDTO> allProducts = productService.getAllProducts();

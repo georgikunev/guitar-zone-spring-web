@@ -1639,4 +1639,80 @@ body:not(.about-page) .footer_section {
     max-width: 900px;
     margin: 0 auto;
 }
+
+.order_details_section .container h2{
+    font-weight: bold;
+}
+
+.order_details_section {
+    padding: 60px 0;
+}
+
+.order-summary, .order-items, .order-actions {
+    background-color: #f7fafa;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.order-summary h3, .order-items h4 {
+    margin-bottom: 20px;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.order-summary p, .order-items p {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #333;
+}
+
+.order-items ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.order-items li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.order-items li:last-child {
+    border-bottom: none;
+}
+
+.item-name {
+    flex: 2;
+}
+
+.item-quantity, .item-price {
+    flex: 1;
+    text-align: right;
+}
+
+.order-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-actions form {
+    margin: 0;
+}
+
+.order-actions label {
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.order-actions select {
+    margin-right: 20px;
+}
+
+.order-actions button {
+    margin-left: 10px;
+}
 /*# sourceMappingURL=style.css.map */

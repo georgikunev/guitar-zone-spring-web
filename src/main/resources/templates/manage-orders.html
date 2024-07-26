@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}">
+    <title>Manage Orders</title>
+</head>
+<body class="sub_page">
+
+<div class="hero_area">
+    <header class="header_section long_section px-0" th:replace="~{fragments/navbar}"></header>
+</div>
+
+<section class="order_management_section layout_padding">
+    <div class="container">
+        <div class="heading_container">
+            <h2>Manage Orders</h2>
+        </div>
+        <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+        <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Total</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="order : ${orders}">
+                        <td th:text="${order.id}">1</td>
+                        <td th:text="${order.customerFullName}">customer@example.com</td>
+                        <td th:text="${#dates.format(order.orderDate, 'yyyy-MM-dd')}">2024-07-25</td>
+                        <td>
+                            <form th:action="@{/admin/orders/update-status}" method="post" style="display:inline;">
+                                <input type="hidden" name="orderId" th:value="${order.id}">
+                                <select name="status" onchange="this.form.submit()">
+                                    <option th:value="Pending" th:selected="${order.status == 'Pending'}">Pending</option>
+                                    <option th:value="Shipped" th:selected="${order.status == 'Shipped'}">Shipped</option>
+                                    <option th:value="Delivered" th:selected="${order.status == 'Delivered'}">Delivered</option>
+                                    <option th:value="Canceled" th:selected="${order.status == 'Canceled'}">Canceled</option>
+                                </select>
+                            </form>
+                        </td>
+                        <td th:text="${order.totalAmount}">100.00</td>
+                        <td>
+                            <a th:href="@{/admin/orders/details/{id}(id=${order.id})}" class="btn btn-info">Details</a>
+                            <form th:action="@{/admin/orders/delete}" method="post" style="display:inline;">
+                                <input type="hidden" name="orderId" th:value="${order.id}">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="info_section long_section" th:replace="~{fragments/info}"></section>
+<footer class="footer_section" th:replace="~{fragments/footer}"></footer>
+
+<div th:replace="~{fragments/script}"></div>
+</body>
+</html>

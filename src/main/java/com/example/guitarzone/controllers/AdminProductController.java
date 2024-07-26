@@ -27,7 +27,7 @@ public class AdminProductController {
         model.addAttribute("product", productService.getProductDetails(id));
         return "edit-product";
     }
-
+    //TODO Prevent reviews from getting deleted when updating products
     @PostMapping("/update")
     public String updateProduct(@ModelAttribute ProductDetailsDTO productDetailsDTO) {
         productService.updateProduct(productDetailsDTO);

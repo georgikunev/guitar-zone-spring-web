@@ -1,6 +1,7 @@
 package com.example.guitarzone.service.impl;
 
 import com.example.guitarzone.model.dtos.CartDTO;
+import com.example.guitarzone.model.dtos.OrderAdminDTO;
 import com.example.guitarzone.model.dtos.OrderDTO;
 import com.example.guitarzone.model.entities.Order;
 import com.example.guitarzone.model.entities.OrderItem;
@@ -47,6 +48,7 @@ public class OrderServiceImpl implements OrderService {
         order.setCity(orderDTO.getCity());
         order.setZip(orderDTO.getZip());
         order.setTotalAmount(cartDTO.getTotal());
+        order.setStatus("Pending");
 
         List<OrderItem> orderItems = cartDTO.getItems().stream().map(cartItemDTO -> {
             Product product = productRepository.findById(cartItemDTO.getProduct().getId()).orElseThrow(() -> new RuntimeException("Product not found"));
@@ -78,6 +80,36 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> getOrderHistory(Long userId) {
         return orderRepository.findByUserId(userId);
+    }
+
+    @Override
+    public List<OrderAdminDTO> getAllOrders() {
+        List<Order> orders = orderRepository.findAll();
+        return orders.stream().map(this::mapToAdminDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public OrderAdminDTO getOrderById(Long id) {
+        Order order = orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Order not found"));
+        return mapToAdminDTO(order);
+    }
+
+    @Override
+    public void updateOrderStatus(Long orderId, String status) {
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new RuntimeException("Order not found"));
+        order.setStatus(status);
+        orderRepository.save(order);
+    }
+
+    @Override
+    public void deleteOrder(Long orderId) {
+        orderRepository.deleteById(orderId);
+    }
+
+    private OrderAdminDTO mapToAdminDTO(Order order) {
+        OrderAdminDTO orderAdminDTO = modelMapper.map(order, OrderAdminDTO.class);
+        orderAdminDTO.setCustomerFullName(order.getUser().getFirstName() + " " + order.getUser().getLastName());
+        return orderAdminDTO;
     }
 }
 

@@ -1,5 +1,7 @@
 package com.example.guitarzone.model.dtos;
 
+
+//TODO Validations
 public class ProductDetailsDTO {
     private Long id;
     private String name;
