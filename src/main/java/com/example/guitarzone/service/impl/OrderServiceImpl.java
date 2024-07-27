@@ -3,6 +3,7 @@ package com.example.guitarzone.service.impl;
 import com.example.guitarzone.model.dtos.CartDTO;
 import com.example.guitarzone.model.dtos.OrderAdminDTO;
 import com.example.guitarzone.model.dtos.OrderDTO;
+import com.example.guitarzone.model.dtos.OrderItemDTO;
 import com.example.guitarzone.model.entities.Order;
 import com.example.guitarzone.model.entities.OrderItem;
 import com.example.guitarzone.model.entities.Product;
@@ -52,7 +53,6 @@ public class OrderServiceImpl implements OrderService {
 
         List<OrderItem> orderItems = cartDTO.getItems().stream().map(cartItemDTO -> {
             Product product = productRepository.findById(cartItemDTO.getProduct().getId()).orElseThrow(() -> new RuntimeException("Product not found"));
-
             if (product.getQuantity() > 0) {
                 product.setQuantity(product.getQuantity() - cartItemDTO.getQuantity());
                 if (product.getQuantity() == 0) {
@@ -62,18 +62,18 @@ public class OrderServiceImpl implements OrderService {
             } else {
                 throw new RuntimeException("Product out of stock");
             }
-
             OrderItem orderItem = new OrderItem();
             orderItem.setProduct(product);
             orderItem.setQuantity(cartItemDTO.getQuantity());
             orderItem.setPrice(cartItemDTO.getPrice());
             orderItem.setOrder(order);
+            orderItem.setProductName(product.getName());
+            orderItem.setProductPrice(product.getPrice());
+            orderItem.setProductQuantity(product.getQuantity());
             return orderItem;
         }).collect(Collectors.toList());
-
         order.setOrderItems(orderItems);
         orderRepository.save(order);
-
         cartService.clearCart(userId);
     }
 
@@ -107,9 +107,28 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private OrderAdminDTO mapToAdminDTO(Order order) {
-        OrderAdminDTO orderAdminDTO = modelMapper.map(order, OrderAdminDTO.class);
+        OrderAdminDTO orderAdminDTO = new OrderAdminDTO();
+        orderAdminDTO.setId(order.getId());
+        orderAdminDTO.setOrderDate(order.getOrderDate());
+        orderAdminDTO.setAddress(order.getAddress());
+        orderAdminDTO.setCountry(order.getCountry());
+        orderAdminDTO.setCity(order.getCity());
+        orderAdminDTO.setZip(order.getZip());
+        orderAdminDTO.setTotalAmount(order.getTotalAmount());
+        orderAdminDTO.setStatus(order.getStatus());
         orderAdminDTO.setCustomerFullName(order.getUser().getFirstName() + " " + order.getUser().getLastName());
+        orderAdminDTO.setOrderItems(order.getOrderItems().stream()
+                .map(this::mapToOrderItemDTO)
+                .collect(Collectors.toList()));
         return orderAdminDTO;
     }
-}
 
+    private OrderItemDTO mapToOrderItemDTO(OrderItem orderItem) {
+        OrderItemDTO dto = new OrderItemDTO();
+        dto.setProductId(orderItem.getProduct() != null ? orderItem.getProduct().getId() : null);
+        dto.setProductName(orderItem.getProductName());
+        dto.setPrice(orderItem.getProductPrice());
+        dto.setQuantity(orderItem.getQuantity());
+        return dto;
+    }
+}

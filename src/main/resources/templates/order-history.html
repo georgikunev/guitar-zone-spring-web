@@ -20,9 +20,9 @@
                 <h4>Items:</h4>
                 <ul>
                     <li th:each="item : ${order.orderItems}">
-                        <span class="item-name" th:text="${item.product.name}"></span>
-                        <span class="item-quantity" th:text="'x ' + ${item.quantity}"></span>
-                        <span class="item-price" th:text="'$' + ${item.price}"></span>
+                        <span class="item-name" th:text="${item.productName}">Product Name</span>
+                        <span class="item-quantity" th:text="'x ' + ${item.quantity}">Quantity</span>
+                        <span class="item-price" th:text="'$' + ${item.price}">Price</span>
                     </li>
                 </ul>
             </div>

@@ -22,6 +22,18 @@ public class OrderItem {
     @Column(nullable = false)
     private Double price;
 
+    // Static fields to store product info even after deletion
+    @Column(nullable = false)
+    private String productName;
+
+    @Column(nullable = false)
+    private Double productPrice;
+
+    @Column(nullable = false)
+    private Integer productQuantity;
+
+    // Getters and setters
+
     public Long getId() {
         return id;
     }
@@ -44,6 +56,11 @@ public class OrderItem {
 
     public void setProduct(Product product) {
         this.product = product;
+        if (product != null) {
+            this.productName = product.getName();
+            this.productPrice = product.getPrice();
+            this.productQuantity = product.getQuantity();
+        }
     }
 
     public Integer getQuantity() {
@@ -64,5 +81,29 @@ public class OrderItem {
 
     public Double getSubtotal() {
         return price * quantity;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public Double getProductPrice() {
+        return productPrice;
+    }
+
+    public void setProductPrice(Double productPrice) {
+        this.productPrice = productPrice;
+    }
+
+    public Integer getProductQuantity() {
+        return productQuantity;
+    }
+
+    public void setProductQuantity(Integer productQuantity) {
+        this.productQuantity = productQuantity;
     }
 }

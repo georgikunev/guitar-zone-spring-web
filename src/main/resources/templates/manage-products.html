@@ -30,7 +30,7 @@
                         <span th:text="${product.type}">Product Type</span>
                         <div class="price_box">
                             <h6 th:text="${product.price}">£0.00</h6>
-                            <p th:text="${product.stockStatus}"></p>
+                            <p class="stock_status" th:classappend="${product.stockStatus == 'out of stock'} ? 'out-of-stock' : ''" th:text="${product.stockStatus}"></p>
                         </div>
                         <div class="action_buttons">
                             <form th:action="@{/admin/products/edit}" method="get">

@@ -2,7 +2,12 @@ package com.example.guitarzone.service.impl;
 
 import com.example.guitarzone.model.dtos.ProductDetailsDTO;
 import com.example.guitarzone.model.dtos.ShortProductInfoDTO;
+import com.example.guitarzone.model.entities.CartItem;
+import com.example.guitarzone.model.entities.Order;
+import com.example.guitarzone.model.entities.OrderItem;
 import com.example.guitarzone.model.entities.Product;
+import com.example.guitarzone.repositories.CartItemRepository;
+import com.example.guitarzone.repositories.OrderRepository;
 import com.example.guitarzone.repositories.ProductRepository;
 import com.example.guitarzone.service.ProductService;
 import jakarta.transaction.Transactional;
@@ -20,10 +25,14 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final ModelMapper modelMapper;
+    private final OrderRepository orderRepository;
+    private final CartItemRepository cartItemRepository;
 
-    public ProductServiceImpl(ProductRepository productRepository, ModelMapper modelMapper) {
+    public ProductServiceImpl(ProductRepository productRepository, ModelMapper modelMapper, OrderRepository orderRepository, CartItemRepository cartItemRepository) {
         this.productRepository = productRepository;
         this.modelMapper = modelMapper;
+        this.orderRepository = orderRepository;
+        this.cartItemRepository = cartItemRepository;
     }
 
     @Transactional
@@ -46,9 +55,35 @@ public class ProductServiceImpl implements ProductService {
         modelMapper.map(productDetailsDTO, product);
         productRepository.save(product);
     }
+
     @Override
     public void removeProduct(Long id) {
-        productRepository.deleteById(id);
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+
+        // Remove product from all cart items
+        List<CartItem> cartItems = cartItemRepository.findByProduct(product);
+        cartItemRepository.deleteAll(cartItems);
+
+        // Check if there are any orders associated with the product
+        List<Order> associatedOrders = orderRepository.findByOrderItemsProduct(product);
+        boolean hasPendingOrders = associatedOrders.stream()
+                .anyMatch(order -> "Pending".equals(order.getStatus()));
+
+        if (hasPendingOrders) {
+            throw new IllegalStateException("Cannot delete product associated with pending orders");
+        }
+
+        // Update related order items
+        for (Order order : associatedOrders) {
+            for (OrderItem orderItem : order.getOrderItems()) {
+                if (orderItem.getProduct() != null && orderItem.getProduct().equals(product)) {
+                    orderItem.setProduct(null);  // Set the product reference to null
+                }
+            }
+        }
+
+        productRepository.delete(product);
     }
 
     @Override

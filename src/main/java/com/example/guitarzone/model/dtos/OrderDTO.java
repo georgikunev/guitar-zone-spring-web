@@ -2,6 +2,7 @@ package com.example.guitarzone.model.dtos;
 
 import jakarta.validation.constraints.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDTO {
@@ -54,6 +55,7 @@ public class OrderDTO {
     private List<OrderItemDTO> orderItems;
 
     public OrderDTO() {
+        this.orderItems = new ArrayList<>();
     }
 
     public Long getUserId() {

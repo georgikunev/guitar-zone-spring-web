@@ -1,6 +1,7 @@
 package com.example.guitarzone.model.dtos;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderAdminDTO {
@@ -15,6 +16,9 @@ public class OrderAdminDTO {
     private List<OrderItemDTO> orderItems;
     private String customerFullName;
 
+    public OrderAdminDTO() {
+        this.orderItems = new ArrayList<>();
+    }
 
     public Long getId() {
         return id;

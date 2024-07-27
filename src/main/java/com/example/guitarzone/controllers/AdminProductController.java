@@ -5,6 +5,7 @@ import com.example.guitarzone.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/admin/products")
@@ -35,8 +36,13 @@ public class AdminProductController {
     }
     //TODO Deal with orders interference
     @PostMapping("/remove")
-    public String removeProduct(@RequestParam Long id) {
-        productService.removeProduct(id);
+    public String removeProduct(@RequestParam Long id, RedirectAttributes redirectAttributes) {
+        try {
+            productService.removeProduct(id);
+            redirectAttributes.addFlashAttribute("successMessage", "Product removed successfully");
+        } catch (IllegalStateException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        }
         return "redirect:/admin/products";
     }
 
