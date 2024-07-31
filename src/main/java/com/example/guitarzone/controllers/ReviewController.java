@@ -3,8 +3,6 @@ package com.example.guitarzone.controllers;
 import com.example.guitarzone.model.dtos.ReviewDTO;
 import com.example.guitarzone.service.ReviewService;
 import com.example.guitarzone.service.UserService;
-import com.example.guitarzone.service.impl.CustomUserDetails;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
