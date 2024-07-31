@@ -1,6 +1,7 @@
 package com.example.guitarzone.service.impl;
 
 import com.example.guitarzone.model.dtos.ProductDetailsDTO;
+import com.example.guitarzone.model.dtos.ReviewDTO;
 import com.example.guitarzone.model.dtos.ShortProductInfoDTO;
 import com.example.guitarzone.model.entities.CartItem;
 import com.example.guitarzone.model.entities.Order;
@@ -10,6 +11,7 @@ import com.example.guitarzone.repositories.CartItemRepository;
 import com.example.guitarzone.repositories.OrderRepository;
 import com.example.guitarzone.repositories.ProductRepository;
 import com.example.guitarzone.service.ProductService;
+import com.example.guitarzone.service.ReviewService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -27,12 +29,14 @@ public class ProductServiceImpl implements ProductService {
     private final ModelMapper modelMapper;
     private final OrderRepository orderRepository;
     private final CartItemRepository cartItemRepository;
+    private final ReviewService reviewService;
 
-    public ProductServiceImpl(ProductRepository productRepository, ModelMapper modelMapper, OrderRepository orderRepository, CartItemRepository cartItemRepository) {
+    public ProductServiceImpl(ProductRepository productRepository, ModelMapper modelMapper, OrderRepository orderRepository, CartItemRepository cartItemRepository, ReviewService reviewService) {
         this.productRepository = productRepository;
         this.modelMapper = modelMapper;
         this.orderRepository = orderRepository;
         this.cartItemRepository = cartItemRepository;
+        this.reviewService = reviewService;
     }
 
     @Transactional
@@ -45,7 +49,22 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDetailsDTO getProductDetails(Long id) {
-        return productRepository.findById(id).map(this::mapToDetailsInfo).orElseThrow();
+        ProductDetailsDTO productDetails= productRepository.findById(id).map(this::mapToDetailsInfo).orElseThrow();
+        List<ReviewDTO> reviews = reviewService.getReviewsByProductId(id);
+        productDetails.setReviews(reviews);
+        productDetails.setNumberOfReviews(reviews.size());
+
+        if (!reviews.isEmpty()) {
+            double averageRating = reviews.stream()
+                    .mapToInt(ReviewDTO::getRating)
+                    .average()
+                    .orElse(0.0);
+            productDetails.setRating(averageRating);
+        } else {
+            productDetails.setRating(0.0);
+        }
+
+        return productDetails;
     }
 
     @Override

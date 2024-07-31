@@ -26,7 +26,16 @@
                 <div class="details-box">
                     <h2 th:text="*{name}">guitar name</h2>
                     <p th:text="*{type}">guitar type</p>
-                    <p th:text="*{description}">guitar description</p>
+                    <!-- Rating section -->
+                    <div class="rating" th:data-rating="${productDetails.rating}">
+                        <span class="star"></span>
+                        <span class="star"></span>
+                        <span class="star"></span>
+                        <span class="star"></span>
+                        <span class="star"></span>
+                        <span class="rating-value" th:text="'(' + ${productDetails.numberOfReviews} + ' reviews)'"></span>
+                    </div>
+
                     <div class="price-box">
                         <h6 class="price_heading"><span class="original_price" th:text="*{price}">£</span></h6>
                         <p class="stock_status"><i class="fa fa-check-circle" th:text="*{stockStatus}"></i></p>
@@ -42,56 +51,51 @@
                         </form>
                     </div>
                 </div>
-                <div class="rating-summary">
-                    <h4>Ratings</h4>
-                    <div class="overall-rating">
-                        <h4 th:text="*{rating}">4.85 / 5</h4>
-                        <div class="stars">
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                        </div>
-                        Based on the number of reviews:
-                        <p th:text="*{numberOfReviews}">17</p>
+            </div>
+        </div>
+
+        <!-- Full description section -->
+        <div class="full-description" id="fullDescription">
+            <h3>Description</h3>
+            <p th:text="*{description}">Full guitar description</p>
+        </div>
+
+        <!-- Add review section -->
+        <!-- Add review section -->
+        <div class="review-section">
+            <h3>Add a Review</h3>
+            <form th:action="@{/guitars/{id}/reviews/add(id=${productDetails.id})}" method="post">
+                <div class="form-group">
+                    <label for="rating">Rating</label>
+                    <select id="rating" name="rating" class="form-control">
+                        <option value="5">5</option>
+                        <option value="4">4</option>
+                        <option value="3">3</option>
+                        <option value="2">2</option>
+                        <option value="1">1</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="comment">Comment</label>
+                    <textarea id="comment" name="comment" class="form-control" rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Review</button>
+            </form>
+        </div>
+
+
+        <!-- Display existing reviews -->
+        <div class="reviews-section">
+            <h3>Reviews</h3>
+            <div th:each="review : ${productDetails.reviews}">
+                <div class="review">
+                    <div class="review-header">
+                        <span class="review-rating" th:text="'Rating: ' + ${review.rating} + ' / 5'"></span>
+                        <span class="review-user" th:text="${review.username}"></span>
+                        <span class="review-date" th:text="${#dates.format(review.createdDate, 'dd-MM-yyyy')}"></span>
                     </div>
-                    <div class="rating-distribution">
-                        <div class="rating-bar">
-                            <span>5 <i class="fa fa-star"></i></span>
-                            <div class="bar">
-                                <div class="filled" style="width: 88%;"></div>
-                            </div>
-                            <span class="rating-value">15</span>
-                        </div>
-                        <div class="rating-bar">
-                            <span>4 <i class="fa fa-star"></i></span>
-                            <div class="bar">
-                                <div class="filled" style="width: 12%;"></div>
-                            </div>
-                            <span class="rating-value">2</span>
-                        </div>
-                        <div class="rating-bar">
-                            <span>3 <i class="fa fa-star"></i></span>
-                            <div class="bar">
-                                <div class="filled" style="width: 0;"></div>
-                            </div>
-                            <span class="rating-value">0</span>
-                        </div>
-                        <div class="rating-bar">
-                            <span>2 <i class="fa fa-star"></i></span>
-                            <div class="bar">
-                                <div class="filled" style="width: 0;"></div>
-                            </div>
-                            <span class="rating-value">0</span>
-                        </div>
-                        <div class="rating-bar">
-                            <span>1 <i class="fa fa-star"></i></span>
-                            <div class="bar">
-                                <div class="filled" style="width: 0;"></div>
-                            </div>
-                            <span class="rating-value">0</span>
-                        </div>
+                    <div class="review-body">
+                        <p th:text="${review.comment}"></p>
                     </div>
                 </div>
             </div>
@@ -110,5 +114,20 @@
 <!-- end footer section -->
 
 <div th:replace="~{fragments/script}"></div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const ratingElement = document.querySelector('.rating');
+        const ratingValue = parseFloat(ratingElement.getAttribute('data-rating'));
+        const stars = ratingElement.querySelectorAll('.star');
+
+        stars.forEach((star, index) => {
+            if (ratingValue >= index + 1) {
+                star.classList.add('filled');
+            } else if (ratingValue > index) {
+                star.classList.add('half');
+            }
+        });
+    });
+</script>
 </body>
 </html>

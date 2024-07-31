@@ -2,16 +2,21 @@ package com.example.guitarzone.model.entities;
 
 import jakarta.persistence.*;
 
+import java.time.Instant;
+
 @Entity
-@Table(name = "reviews")
+@Table(name = "reviews", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"user_id", "product_id"})
+})
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String content;
+    @Column(length = 1000)
+    private String comment;
 
+    private Instant createdDate;
     @Column(nullable = false)
     private Integer rating;
 
@@ -31,12 +36,20 @@ public class Review {
         this.id = id;
     }
 
-    public String getContent() {
-        return content;
+    public Instant getCreatedDate() {
+        return createdDate;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setCreatedDate(Instant createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public Integer getRating() {

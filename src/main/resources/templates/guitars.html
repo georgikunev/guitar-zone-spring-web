@@ -40,20 +40,21 @@
                         </h5>
                         <span class="guitar_type" th:text="${product.type}">guitar type</span>
                         <div class="rating-stock">
-                            <div class="rating" data-product-id="123">
-                                <span class="fa fa-star" data-value="1"></span>
-                                <span class="fa fa-star" data-value="2"></span>
-                                <span class="fa fa-star" data-value="3"></span>
-                                <span class="fa fa-star" data-value="4"></span>
-                                <span class="fa fa-star" data-value="5"></span>
+                            <div class="rating" th:data-rating="${product.rating}">
+                                <span class="star"></span>
+                                <span class="star"></span>
+                                <span class="star"></span>
+                                <span class="star"></span>
+                                <span class="star"></span>
                             </div>
-                            <span th:text="${product.rating}"></span>
                         </div>
                         <div class="price_box">
                             <h6 class="price_heading">
                                 <span class="original_price" th:text="${product.price}"></span>£
                             </h6>
-                            <p class="stock_status" th:classappend="${product.stockStatus == 'out of stock'} ? 'out-of-stock' : ''" th:text="${product.stockStatus}">
+                            <p class="stock_status"
+                               th:classappend="${product.stockStatus == 'out of stock'} ? 'out-of-stock' : ''"
+                               th:text="${product.stockStatus}">
                         </div>
                         <div class="action_buttons">
                             <form th:action="@{/cart/add}" method="post">
@@ -92,39 +93,19 @@
 <!-- footer section -->
 
 <div th:replace="~{fragments/script}"></div>
-
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const stars = document.querySelectorAll('.rating .fa-star');
-        stars.forEach(star => {
-            star.addEventListener('click', function () {
-                const ratingValue = this.getAttribute('data-value');
-                const productId = this.parentElement.getAttribute('data-product-id');
+        const ratingElements = document.querySelectorAll('.rating');
+        ratingElements.forEach(ratingElement => {
+            const ratingValue = parseFloat(ratingElement.getAttribute('data-rating'));
+            const stars = ratingElement.querySelectorAll('.star');
 
-                // Highlight the clicked stars
-                stars.forEach(s => s.classList.remove('checked'));
-                for (let i = 0; i < ratingValue; i++) {
-                    stars[i].classList.add('checked');
+            stars.forEach((star, index) => {
+                if (ratingValue >= index + 1) {
+                    star.classList.add('filled');
+                } else if (ratingValue > index) {
+                    star.classList.add('half');
                 }
-
-                // Send the rating to the server
-                fetch(`/rateProduct`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        productId: productId,
-                        rating: ratingValue
-                    }),
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log('Success:', data);
-                    })
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    });
             });
         });
     });

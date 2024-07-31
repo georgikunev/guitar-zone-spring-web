@@ -1,6 +1,8 @@
 package com.example.guitarzone.model.dtos;
 
 
+import java.util.List;
+
 //TODO Validations
 public class ProductDetailsDTO {
     private Long id;
@@ -13,6 +15,7 @@ public class ProductDetailsDTO {
     private Double rating;
     private String imageUrl;
     private Integer numberOfReviews;
+    private List<ReviewDTO> reviews;
 
     public ProductDetailsDTO() {
     }
@@ -95,5 +98,13 @@ public class ProductDetailsDTO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<ReviewDTO> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<ReviewDTO> reviews) {
+        this.reviews = reviews;
     }
 }
