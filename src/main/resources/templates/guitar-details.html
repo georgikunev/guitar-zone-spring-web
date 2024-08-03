@@ -91,7 +91,7 @@
                 <div class="review">
                     <div class="review-header">
                         <span class="review-rating" th:text="'Rating: ' + ${review.rating} + ' / 5'"></span>
-                        <span class="review-user" th:text="${review.username}"></span>
+                        <span class="review-user" th:text="${review.fullName}"></span>
                         <span class="review-date" th:text="${#dates.format(review.createdDate, 'dd-MM-yyyy')}"></span>
                     </div>
                     <div class="review-body">

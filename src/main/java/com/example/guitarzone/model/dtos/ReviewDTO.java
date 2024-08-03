@@ -6,10 +6,10 @@ public class ReviewDTO {
     private Long id;
     private Long productId;
     private Long userId;
-    private int rating;
+    private Integer rating;
     private String comment;
     private Instant createdDate;
-    private String username;
+    private String fullName;
 
     public ReviewDTO() {
     }
@@ -45,7 +45,6 @@ public class ReviewDTO {
     public void setRating(int rating) {
         this.rating = rating;
     }
-
     public String getComment() {
         return comment;
     }
@@ -61,12 +60,11 @@ public class ReviewDTO {
     public void setCreatedDate(Instant createdDate) {
         this.createdDate = createdDate;
     }
-
-    public String getUsername() {
-        return username;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 }

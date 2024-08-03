@@ -1,5 +1,6 @@
 package com.example.guitarzone.service.impl;
 
+import com.example.guitarzone.ReviewClient;
 import com.example.guitarzone.model.dtos.ProductDetailsDTO;
 import com.example.guitarzone.model.dtos.ReviewDTO;
 import com.example.guitarzone.model.dtos.ShortProductInfoDTO;
@@ -11,7 +12,6 @@ import com.example.guitarzone.repositories.CartItemRepository;
 import com.example.guitarzone.repositories.OrderRepository;
 import com.example.guitarzone.repositories.ProductRepository;
 import com.example.guitarzone.service.ProductService;
-import com.example.guitarzone.service.ReviewService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -29,14 +29,15 @@ public class ProductServiceImpl implements ProductService {
     private final ModelMapper modelMapper;
     private final OrderRepository orderRepository;
     private final CartItemRepository cartItemRepository;
-    private final ReviewService reviewService;
+    private final ReviewClient reviewClient;
 
-    public ProductServiceImpl(ProductRepository productRepository, ModelMapper modelMapper, OrderRepository orderRepository, CartItemRepository cartItemRepository, ReviewService reviewService) {
+
+    public ProductServiceImpl(ProductRepository productRepository, ModelMapper modelMapper, OrderRepository orderRepository, CartItemRepository cartItemRepository, ReviewClient reviewClient) {
         this.productRepository = productRepository;
         this.modelMapper = modelMapper;
         this.orderRepository = orderRepository;
         this.cartItemRepository = cartItemRepository;
-        this.reviewService = reviewService;
+        this.reviewClient = reviewClient;
     }
 
     @Transactional
@@ -49,8 +50,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDetailsDTO getProductDetails(Long id) {
-        ProductDetailsDTO productDetails= productRepository.findById(id).map(this::mapToDetailsInfo).orElseThrow();
-        List<ReviewDTO> reviews = reviewService.getReviewsByProductId(id);
+        ProductDetailsDTO productDetails = productRepository.findById(id).map(this::mapToDetailsInfo).orElseThrow();
+        List<ReviewDTO> reviews = reviewClient.getReviewsByProductId(id);
         productDetails.setReviews(reviews);
         productDetails.setNumberOfReviews(reviews.size());
 

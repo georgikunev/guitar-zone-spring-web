@@ -35,9 +35,6 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Order> orders;
 
-    @OneToMany(mappedBy = "user")
-    private List<Review> reviews;
-
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Cart cart;
 
@@ -51,7 +48,6 @@ public class User {
 
     public User() {
         this.orders = new ArrayList<>();
-        this.reviews = new ArrayList<>();
         this.roles = new HashSet<>();
         this.wishlist = new HashSet<>();
         this.cart = new Cart();
@@ -120,14 +116,6 @@ public class User {
         this.orders = orders;
     }
 
-    public List<Review> getReviews() {
-        return reviews;
-    }
-
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
-    }
-
     public Cart getCart() {
         return cart;
     }
@@ -142,5 +130,9 @@ public class User {
 
     public void setWishlist(Set<Product> wishlist) {
         this.wishlist = wishlist;
+    }
+
+    public String getFullName() {
+        return getFirstName() + " " + getLastName();
     }
 }

@@ -1,8 +1,6 @@
 package com.example.guitarzone.model.entities;
 
 import jakarta.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "prdoucts")
@@ -29,20 +27,10 @@ public class Product {
     @Transient  // Not persisted in the database
     private String stockStatus;  // Derived field
 
-    private Double rating = 0.0;
-
-    @Column(name = "number_of_reviews")
-    private Integer numberOfReviews = 0;
 
     @Column(name = "image_url", nullable = false)
     private String imageUrl;
 
-    @OneToMany(mappedBy = "product")
-    private List<Review> reviews;
-
-    public Product() {
-        this.reviews = new ArrayList<>();
-    }
 
     @PostLoad
     @PostPersist
@@ -107,22 +95,6 @@ public class Product {
         this.stockStatus = stockStatus;
     }
 
-    public Double getRating() {
-        return rating;
-    }
-
-    public void setRating(Double rating) {
-        this.rating = rating;
-    }
-
-    public Integer getNumberOfReviews() {
-        return numberOfReviews;
-    }
-
-    public void setNumberOfReviews(Integer numberOfReviews) {
-        this.numberOfReviews = numberOfReviews;
-    }
-
     public String getImageUrl() {
         return imageUrl;
     }
@@ -131,11 +103,4 @@ public class Product {
         this.imageUrl = imageUrl;
     }
 
-    public List<Review> getReviews() {
-        return reviews;
-    }
-
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
-    }
 }

@@ -1,13 +1,11 @@
 package com.example.guitarzone.controllers;
 
+import com.example.guitarzone.ReviewClient;
 import com.example.guitarzone.model.dtos.ReviewDTO;
-import com.example.guitarzone.service.ReviewService;
+import com.example.guitarzone.model.entities.User;
 import com.example.guitarzone.service.UserService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
@@ -16,13 +14,14 @@ import java.time.Instant;
 @Controller
 @RequestMapping("/guitars")
 public class ReviewController {
-    private final ReviewService reviewService;
+    private final ReviewClient reviewClient;
     private final UserService userService;
 
-    public ReviewController(ReviewService reviewService, UserService userService) {
-        this.reviewService = reviewService;
+    public ReviewController(ReviewClient reviewClient, UserService userService) {
+        this.reviewClient = reviewClient;
         this.userService = userService;
     }
+
 
     @PostMapping("/{productId}/reviews/add")
     public String addReview(@PathVariable("productId") Long productId,
@@ -30,8 +29,9 @@ public class ReviewController {
                             @RequestParam String comment,
                             Principal principal,
                             RedirectAttributes redirectAttributes) {
+        User user = userService.findByEmail(principal.getName());
         Long userId = userService.findByEmail(principal.getName()).getId();
-        if (reviewService.hasUserReviewedProduct(userId, productId)) {
+        if (reviewClient.hasUserReviewedProduct(userId, productId)) {
             redirectAttributes.addFlashAttribute("errorMessage", "You have already reviewed this product.");
             return "redirect:/guitars/guitar-details/" + productId;
         }
@@ -39,11 +39,12 @@ public class ReviewController {
         ReviewDTO reviewDTO = new ReviewDTO();
         reviewDTO.setUserId(userId);
         reviewDTO.setProductId(productId);
+        reviewDTO.setFullName(user.getFullName());
         reviewDTO.setRating(rating);
         reviewDTO.setComment(comment);
         reviewDTO.setCreatedDate(Instant.now());
 
-        reviewService.addReview(reviewDTO);
+        reviewClient.addReview(reviewDTO);
         redirectAttributes.addFlashAttribute("successMessage", "Review submitted successfully.");
 
         return "redirect:/guitars/guitar-details/" + productId;
