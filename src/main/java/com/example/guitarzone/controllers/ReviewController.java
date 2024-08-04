@@ -1,6 +1,6 @@
 package com.example.guitarzone.controllers;
 
-import com.example.guitarzone.ReviewClient;
+import com.example.guitarzone.components.ReviewClient;
 import com.example.guitarzone.model.dtos.ReviewDTO;
 import com.example.guitarzone.model.entities.User;
 import com.example.guitarzone.service.UserService;

@@ -2,21 +2,15 @@ package com.example.guitarzone.service.impl;
 
 import com.example.guitarzone.model.dtos.UserAccountInfoDTO;
 import com.example.guitarzone.model.dtos.UserRegistrationDTO;
-import com.example.guitarzone.model.entities.Product;
 import com.example.guitarzone.model.entities.User;
 import com.example.guitarzone.repositories.ProductRepository;
 import com.example.guitarzone.repositories.UserRepository;
 import com.example.guitarzone.service.UserService;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.LinkedHashSet;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -70,6 +64,12 @@ public class UserServiceImpl implements UserService {
         modelMapper.map(user, dto);
         return dto;
     }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
 
     private User mapToUser(UserRegistrationDTO userRegistrationDTO) {
         User mappedUser = modelMapper.map(userRegistrationDTO, User.class);

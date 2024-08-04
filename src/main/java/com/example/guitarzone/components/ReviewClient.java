@@ -1,4 +1,4 @@
-package com.example.guitarzone;
+package com.example.guitarzone.components;
 
 import com.example.guitarzone.model.dtos.ReviewDTO;
 import org.springframework.beans.factory.annotation.Value;
