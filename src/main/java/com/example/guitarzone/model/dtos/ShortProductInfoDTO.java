@@ -2,7 +2,7 @@ package com.example.guitarzone.model.dtos;
 
 
 public class ShortProductInfoDTO {
-    private long id;
+    private Long id;
     private String name;
     private String type;
     private Double price;
@@ -15,11 +15,11 @@ public class ShortProductInfoDTO {
     public ShortProductInfoDTO() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

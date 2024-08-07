@@ -48,7 +48,6 @@ public class UserServiceImpl implements UserService {
         User existingUser = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with email: " + email));
 
-        // Map DTO to existing user entity
         modelMapper.map(userAccountInfoDTO, existingUser);
 
         userRepository.save(existingUser);
