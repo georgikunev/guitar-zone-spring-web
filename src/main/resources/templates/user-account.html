@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head}">
-    <title>User Account</title>
+    <title th:text="#{userAccount.title}">User Account</title>
 </head>
 <body class="sub_page">
 
@@ -16,35 +16,45 @@
 <section class="user_account_section layout_padding">
     <div class="container">
         <div class="heading_container">
-            <h2>User Account</h2>
-            <p>Edit your account details</p>
+            <h2 th:text="#{userAccount.heading}">User Account</h2>
+            <p th:text="#{userAccount.editDetails}">Edit your account details</p>
         </div>
         <div class="row">
             <div class="col-md-6 offset-md-3">
+                <!-- Form for updating first and last name -->
                 <div class="form_container">
-                    <form th:action="@{/users/account}" method="post" th:object="${userAccountInfoDTO}">
+                    <form th:action="@{/users/account/update-name}" method="post" th:object="${userAccountInfoDTO}">
                         <div class="form-group">
-                            <label for="firstName">First Name</label>
+                            <label for="firstName" th:text="#{userAccount.firstName}">First Name</label>
                             <input type="text" class="form-control" id="firstName" th:field="*{firstName}" required>
                             <div class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
                         </div>
                         <div class="form-group">
-                            <label for="lastName">Last Name</label>
+                            <label for="lastName" th:text="#{userAccount.lastName}">Last Name</label>
                             <input type="text" class="form-control" id="lastName" th:field="*{lastName}" required>
                             <div class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
                         </div>
-                        <div class="form-group">
-                            <label for="phoneNumber">Phone Number</label>
-                            <input type="text" id="phoneNumber" th:field="*{phoneNumber}" class="form-control"/>
-                            <div class="error" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}" >Phone error</div>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Update</button>
-                        <div th:if="${success}">
-                            <div class="alert alert-success">
-                                <p th:text="${success}">Success message goes here.</p>
-                            </div>
-                        </div>
+                        <button type="submit" class="btn btn-primary" th:text="#{userAccount.updateName}">Update Name</button>
                     </form>
+                </div>
+
+                <!-- Form for updating phone number -->
+                <div class="form_container" style="margin-top: 20px;">
+                    <form th:action="@{/users/account/update-phone}" method="post" th:object="${userPhoneNumberDTO}">
+                        <div class="form-group">
+                            <label for="phoneNumber" th:text="#{userAccount.phoneNumber}">Phone Number</label>
+                            <input type="text" id="phoneNumber" th:field="*{phoneNumber}" class="form-control"/>
+                            <div class="error" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" th:text="#{userAccount.updatePhone}">Update Phone</button>
+                    </form>
+                </div>
+
+                <!-- Success message -->
+                <div th:if="${success}">
+                    <div class="alert alert-success" style="margin-top: 20px;">
+                        <p th:text="${success}">Success message goes here.</p>
+                    </div>
                 </div>
             </div>
         </div>

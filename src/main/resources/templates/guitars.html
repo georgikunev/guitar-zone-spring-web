@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{fragments/head}">
-    <title>Our Guitars</title>
+    <title th:text="#{guitars.title}">Our Guitars</title>
 </head>
 
 <body class="sub_page">
@@ -17,13 +17,8 @@
 <section class="guitar_section layout_padding">
     <div class="container">
         <div class="heading_container">
-            <h2>
-                Our Guitars
-            </h2>
-            <p>
-                Explore our wide selection of guitars, perfect for every skill level and style. Whether you are a
-                beginner or a professional, we have the right guitar for you.
-            </p>
+            <h2 th:text="#{guitars.heading}">Our Guitars</h2>
+            <p th:text="#{guitars.description}">Explore our wide selection of guitars, perfect for every skill level and style. Whether you are a beginner or a professional, we have the right guitar for you.</p>
         </div>
         <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
         <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
@@ -46,11 +41,12 @@
                                 <span class="star"></span>
                                 <span class="star"></span>
                                 <span class="star"></span>
+                                <span class="rating-value" th:text="'(' + ${product.numberOfReviews} + ' ' + #{guitars.reviews} + ')'"></span>
                             </div>
                         </div>
                         <div class="price_box">
                             <h6 class="price_heading">
-                                <span class="original_price" th:text="${product.price}"></span>£
+                                <span class="original_price" th:text="${product.price}"></span>$
                             </h6>
                             <p class="stock_status"
                                th:classappend="${product.stockStatus == 'out of stock'} ? 'out-of-stock' : ''"
@@ -63,13 +59,13 @@
                                 <button type="submit" class="btn btn-primary"
                                         th:classappend="${product.stockStatus == 'out of stock'} ? 'btn-disabled' : ''"
                                         th:disabled="${product.stockStatus == 'out of stock'}">
-                                    <i class="fa fa-shopping-cart"></i> Add To Cart
+                                    <i class="fa fa-shopping-cart"></i> <span th:text="#{guitars.addToCart}">Add To Cart</span>
                                 </button>
                             </form>
                             <form th:action="@{/users/wishlist/add}" method="post">
                                 <input type="hidden" name="productId" th:value="${product.id}">
-                                <button type="submit" class="btn btn-secondary">
-                                    <i class="fa fa-heart"></i> <!-- Adding the Font Awesome heart icon -->
+                                <button type="submit" th:classappend="${product.inWishlist} ? 'btn-heart-red' : 'btn-heart-grey'" class="btn btn-secondary">
+                                    <i class="fa fa-heart"></i>
                                 </button>
                             </form>
                         </div>
@@ -110,6 +106,5 @@
         });
     });
 </script>
-
 </body>
 </html>

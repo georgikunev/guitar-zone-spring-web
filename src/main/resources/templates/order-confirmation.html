@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head}">
-    <title>Order Confirmation</title>
+    <title th:text="#{orderConfirmation.title}">Order Confirmation</title>
 </head>
 <body>
 <!-- Navigation Bar -->
@@ -11,9 +11,9 @@
 <!-- Order Confirmation Section -->
 <div class="layout_padding">
     <div class="order-confirmation-container">
-        <h2>Order Confirmation</h2>
+        <h2 th:text="#{orderConfirmation.heading}">Order Confirmation</h2>
         <p th:text="${orderConfirmation}"></p>
-        <a href="/guitars">Continue Shopping</a>
+        <a th:href="@{/guitars}" th:text="#{orderConfirmation.continueShopping}">Continue Shopping</a>
     </div>
 </div>
 

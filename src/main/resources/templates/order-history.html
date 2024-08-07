@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head}">
-    <title>Order History</title>
+    <title th:text="#{orderHistory.title}">Order History</title>
 </head>
 <body class="sub_page">
 <div th:replace="~{fragments/navbar}"></div>
 
 <section class="order_history_section">
     <div class="container">
-        <h2>Your Order History</h2>
+        <h2 th:text="#{orderHistory.heading}">Your Order History</h2>
         <div th:if="${#lists.isEmpty(orders)}">
-            <p>You have no orders. <a href="/guitars">Start shopping now!</a></p>
+            <p th:text="#{orderHistory.noOrders} + ' '">
+                You have no orders. <a th:href="@{/guitars}" th:text="#{orderHistory.startShopping}">Start shopping now!</a></p>
         </div>
         <div th:if="${not #lists.isEmpty(orders)}">
             <div th:each="order : ${orders}" class="order-item">
-                <h3>Order #<span th:text="${order.id}"></span></h3>
-                <p>Date: <span th:text="${#dates.format(order.orderDate, 'dd-MM-yyyy HH:mm')}"></span></p>
-                <p>Total Amount: $<span th:text="${order.totalAmount}"></span></p>
-                <h4>Items:</h4>
+                <h3 th:text="#{orderHistory.order} + ' #' + ${order.id}">Order #<span th:text="${order.id}"></span></h3>
+                <p th:text="#{orderHistory.date} + ': ' + ${#dates.format(order.orderDate, 'dd-MM-yyyy HH:mm')}">
+                    Date: <span th:text="${#dates.format(order.orderDate, 'dd-MM-yyyy HH:mm')}">01-01-2024 12:00</span></p>
+                <p th:text="#{orderHistory.totalAmount} + ': $' + ${order.totalAmount}">
+                    Total Amount: $<span th:text="${order.totalAmount}">100.00</span></p>
+                <h4 th:text="#{orderHistory.items}">Items:</h4>
                 <ul>
                     <li th:each="item : ${order.orderItems}">
                         <span class="item-name" th:text="${item.productName}">Product Name</span>

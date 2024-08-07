@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head}">
-    <title>Manage Products</title>
+    <title th:text="#{manageProducts.title}">Manage Products</title>
 </head>
 <body class="sub_page">
 
@@ -15,7 +15,7 @@
 <section class="guitar_section layout_padding">
     <div class="container">
         <div class="heading_container">
-            <h2>Manage Products</h2>
+            <h2 th:text="#{manageProducts.heading}">Manage Products</h2>
         </div>
         <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
         <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
@@ -29,17 +29,17 @@
                         <h5 th:text="${product.name}">Product Name</h5>
                         <span th:text="${product.type}">Product Type</span>
                         <div class="price_box">
-                            <h6 th:text="${product.price}">£0.00</h6>
+                            <h6 th:text="'£' + ${product.price}">£0.00</h6>
                             <p class="stock_status" th:classappend="${product.stockStatus == 'out of stock'} ? 'out-of-stock' : ''" th:text="${product.stockStatus}"></p>
                         </div>
                         <div class="action_buttons">
                             <form th:action="@{/admin/products/edit}" method="get">
                                 <input type="hidden" name="id" th:value="${product.id}">
-                                <button type="submit" class="btn btn-primary">Edit</button>
+                                <button type="submit" class="btn btn-primary" th:text="#{manageProducts.editButton}">Edit</button>
                             </form>
                             <form th:action="@{/admin/products/remove}" method="post">
                                 <input type="hidden" name="id" th:value="${product.id}">
-                                <button type="submit" class="btn btn-danger">Remove</button>
+                                <button type="submit" class="btn btn-danger" th:text="#{manageProducts.removeButton}">Remove</button>
                             </form>
                         </div>
                     </div>
@@ -49,7 +49,7 @@
             <div class="col-md-6 col-lg-4">
                 <div class="box">
                     <div class="img-box add-new">
-                        <a th:href="@{/admin/products/new}" class="btn btn-success"><i class="fa fa-plus"></i> Add New Product</a>
+                        <a th:href="@{/admin/products/new}" class="btn btn-success"><i class="fa fa-plus"></i> <span th:text="#{manageProducts.addNewButton}">Add New Product</span></a>
                     </div>
                 </div>
             </div>

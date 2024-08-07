@@ -15,16 +15,16 @@
             <div class="d-flex mx-auto flex-column flex-lg-row align-items-center">
                 <ul class="navbar-nav">
                     <li class="nav-item active">
-                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" th:href="@{/}" th:text="#{navbar.home}">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/about">About</a>
+                        <a class="nav-link" th:href="@{/about}" th:text="#{navbar.about}">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/guitars">Guitars</a>
+                        <a class="nav-link" th:href="@{/guitars}" th:text="#{navbar.guitars}">Guitars</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/contact">Contact Us</a>
+                        <a class="nav-link" th:href="@{/contact}" th:text="#{navbar.contact}">Contact Us</a>
                     </li>
                 </ul>
             </div>
@@ -33,22 +33,22 @@
                 <div class="btn-group" sec:authorize="hasRole('ADMIN')">
                     <button type="button" class="btn btn-transparent dropdown-toggle" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
-                        ADMIN
+                        <span th:text="#{navbar.admin}">ADMIN</span>
                         <i class="fa fa-arrow-circle-down" aria-hidden="true"></i>
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="/admin/products">Manage Products</a>
-                        <a class="dropdown-item" href="/admin/orders">Manage Orders</a>
+                        <a class="dropdown-item" th:href="@{/admin/products}" th:text="#{navbar.manageProducts}">Manage Products</a>
+                        <a class="dropdown-item" th:href="@{/admin/orders}" th:text="#{navbar.manageOrders}">Manage Orders</a>
                     </div>
                 </div>
 
                 <!-- Show login and register links if user is not authenticated -->
-                <a href="/users/login" sec:authorize="!isAuthenticated()">
-                    <span>Login</span>
+                <a th:href="@{/users/login}" sec:authorize="!isAuthenticated()">
+                    <span th:text="#{navbar.login}">Login</span>
                     <i class="login" aria-hidden="true"></i>
                 </a>
-                <a href="/users/register" sec:authorize="!isAuthenticated()">
-                    <span>Register</span>
+                <a th:href="@{/users/register}" sec:authorize="!isAuthenticated()">
+                    <span th:text="#{navbar.register}">Register</span>
                     <i class="register" aria-hidden="true"></i>
                 </a>
 
@@ -58,20 +58,26 @@
                             aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-user user-icon" aria-hidden="true"></i>
                     </button>
-                    <div class="dropdown-menu dropdown-menu-right" >
-                        <a class="dropdown-item" href="/users/account">User Account</a>
-                        <a class="dropdown-item" href="/users/orders">Order History</a>
-                        <a class="dropdown-item" href="/users/wishlist">Wishlist</a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" th:href="@{/users/account}" th:text="#{navbar.userAccount}">User Account</a>
+                        <a class="dropdown-item" th:href="@{/users/orders}" th:text="#{navbar.orderHistory}">Order History</a>
+                        <a class="dropdown-item" th:href="@{/users/wishlist}" th:text="#{navbar.wishlist}">Wishlist</a>
                         <form id="logout-form" th:action="@{/users/logout}" method="post">
-                            <button type="submit" class="dropdown-item">LOGOUT</button>
+                            <button type="submit" class="dropdown-item" th:text="#{navbar.logout}">LOGOUT</button>
                         </form>
                     </div>
                 </div>
-                <a href="/cart" sec:authorize="isAuthenticated()">
+                <a th:href="@{/cart}" sec:authorize="isAuthenticated()">
                     <i class="fa fa-shopping-cart cart-icon" aria-hidden="true"></i>
                 </a>
+            </div>
+            <!-- Language Switcher -->
+            <div class="language-switcher">
+                <a th:href="@{/?lang=en}" th:classappend="${#locale.language == 'en'} ? 'active' : ''">EN</a> |
+                <a th:href="@{/?lang=bg}" th:classappend="${#locale.language == 'bg'} ? 'active' : ''">BG</a>
             </div>
         </div>
     </nav>
 </header>
 </body>
+</html>

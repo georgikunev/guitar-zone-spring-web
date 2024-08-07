@@ -1,30 +1,35 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head}">
-    <title>Order Details</title>
+    <title th:text="#{orderDetails.title}">Order Details</title>
 </head>
 <body class="sub_page">
 <div th:replace="~{fragments/navbar}"></div>
 
 <section class="order_details_section">
     <div class="container">
-        <h2>Order Details</h2>
+        <h2 th:text="#{orderDetails.heading}">Order Details</h2>
         <div class="order-summary">
-            <h3>Order #<span th:text="${order.id}"></span></h3>
-            <p>Date: <span th:text="${#dates.format(order.orderDate, 'dd-MM-yyyy HH:mm')}"></span></p>
-            <p>Customer: <span th:text="${order.customerFullName}"></span></p>
-            <p>Address: <span th:text="${order.address} + ', ' + ${order.city} + ', ' + ${order.country}"></span></p>
-            <p>Total Amount: $<span th:text="${order.totalAmount}"></span></p>
-            <p>Status: <span th:text="${order.status}"></span></p>
+            <h3 th:text="#{orderDetails.order} + ' #' + ${order.id}">Order #<span th:text="${order.id}">123</span></h3>
+            <p th:text="#{orderDetails.date} + ': ' + ${#dates.format(order.orderDate, 'dd-MM-yyyy HH:mm')}">
+                Date: <span th:text="${#dates.format(order.orderDate, 'dd-MM-yyyy HH:mm')}">01-01-2024 12:00</span></p>
+            <p th:text="#{orderDetails.customer} + ': ' + ${order.customerFullName}">
+                Customer: <span th:text="${order.customerFullName}">John Doe</span></p>
+            <p th:text="#{orderDetails.address} + ': ' + ${order.address} + ', ' + ${order.city} + ', ' + ${order.country}">
+                Address: <span th:text="${order.address} + ', ' + ${order.city} + ', ' + ${order.country}">123 Street, City, Country</span></p>
+            <p th:text="#{orderDetails.totalAmount} + ': $' + ${order.totalAmount}">
+                Total Amount: <span th:text="${order.totalAmount}">100.00</span></p>
+            <p th:text="#{orderDetails.status} + ': ' + ${order.status}">
+                Status: <span th:text="${order.status}">Pending</span></p>
         </div>
 
         <div class="order-items">
-            <h4>Items:</h4>
+            <h4 th:text="#{orderDetails.items}">Items:</h4>
             <ul>
                 <li th:each="item : ${order.orderItems}">
-                    <span class="item-name" th:text="${item.productName}"></span>
-                    <span class="item-quantity" th:text="'x ' + ${item.quantity}"></span>
-                    <span class="item-price" th:text="'$' + ${item.price}"></span>
+                    <span class="item-name" th:text="${item.productName}">Guitar</span>
+                    <span class="item-quantity" th:text="'x ' + ${item.quantity}">x1</span>
+                    <span class="item-price" th:text="'$' + ${item.price}">$100.00</span>
                 </li>
             </ul>
         </div>
@@ -32,19 +37,19 @@
         <div class="order-actions">
             <form th:action="@{/admin/orders/update-status}" method="post">
                 <input type="hidden" name="orderId" th:value="${order.id}">
-                <label for="status">Update Status:</label>
+                <label for="status" th:text="#{orderDetails.updateStatus}">Update Status:</label>
                 <select name="status" id="status">
-                    <option th:value="Pending" th:selected="${order.status == 'Pending'}">Pending</option>
-                    <option th:value="Shipped" th:selected="${order.status == 'Shipped'}">Shipped</option>
-                    <option th:value="Delivered" th:selected="${order.status == 'Delivered'}">Delivered</option>
-                    <option th:value="Canceled" th:selected="${order.status == 'Canceled'}">Canceled</option>
+                    <option th:value="Pending" th:text="#{order.status.pending}" th:selected="${order.status == 'Pending'}">Pending</option>
+                    <option th:value="Shipped" th:text="#{order.status.shipped}" th:selected="${order.status == 'Shipped'}">Shipped</option>
+                    <option th:value="Delivered" th:text="#{order.status.delivered}" th:selected="${order.status == 'Delivered'}">Delivered</option>
+                    <option th:value="Canceled" th:text="#{order.status.canceled}" th:selected="${order.status == 'Canceled'}">Canceled</option>
                 </select>
-                <button type="submit" class="btn btn-primary">Update Status</button>
+                <button type="submit" class="btn btn-primary" th:text="#{orderDetails.updateStatusButton}">Update Status</button>
             </form>
 
             <form th:action="@{/admin/orders/delete}" method="post" style="display:inline;">
                 <input type="hidden" name="orderId" th:value="${order.id}">
-                <button type="submit" class="btn btn-danger">Delete Order</button>
+                <button type="submit" class="btn btn-danger" th:text="#{orderDetails.deleteOrderButton}">Delete Order</button>
             </form>
         </div>
     </div>

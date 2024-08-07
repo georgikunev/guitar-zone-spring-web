@@ -58,4 +58,19 @@ public class ReviewClient {
                 .retrieve()
                 .body(Boolean.class);
     }
+    public void deleteReviewsByProductId(Long productId) {
+        String url = UriComponentsBuilder.fromHttpUrl(reviewServiceUrl)
+                .path("/reviews/product/{productId}")
+                .buildAndExpand(productId)
+                .toUriString();
+
+        try {
+            restClient.delete()
+                    .uri(url)
+                    .retrieve()
+                    .toBodilessEntity();
+        } catch (RestClientResponseException e) {
+            throw new IllegalArgumentException("Could not delete reviews.");
+        }
+    }
 }

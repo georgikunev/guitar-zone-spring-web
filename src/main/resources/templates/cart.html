@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head}">
-    <title>Shopping Cart</title>
+    <title th:text="#{cart.title}">Shopping Cart</title>
 </head>
 <body>
 <!-- Navigation Bar -->
@@ -12,10 +12,12 @@
 <!-- Cart Section -->
 <div class="layout_padding">
     <div class="cart-container">
-        <h2>Shopping Cart</h2>
+        <h2 th:text="#{cart.title}">Shopping Cart</h2>
         <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
         <div th:if="${#lists.isEmpty(cart.items)}">
-            <p>Your cart is empty. <a href="/guitars">Continue shopping</a></p>
+            <p th:text="#{cart.emptyMessage}">
+                Your cart is empty. <a href="/guitars" th:text="#{cart.continueShopping}">Continue shopping</a>
+            </p>
         </div>
         <div th:if="${not #lists.isEmpty(cart.items)}">
             <div th:each="item : ${cart.items}" class="cart-item">
@@ -38,12 +40,12 @@
                 </div>
                 <form th:action="@{/cart/remove}" method="post" class="cart-item-remove">
                     <input type="hidden" name="itemId" th:value="${item.productId}">
-                    <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Remove</button>
+                    <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> <span th:text="#{cart.remove}">Remove</span></button>
                 </form>
             </div>
-            <div class="cart-total" th:text="'Total: $' + ${cart.total}"></div>
+            <div class="cart-total" th:text="#{checkout.total} + ': $' + ${cart.total}">Total: </div>
             <form th:action="@{/cart/proceed-to-checkout}" method="post">
-                <button type="submit" class="checkout-btn">Checkout</button>
+                <button type="submit" class="checkout-btn" th:text="#{cart.checkout}">Checkout</button>
             </form>
         </div>
     </div>

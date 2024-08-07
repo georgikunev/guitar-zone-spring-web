@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -44,8 +45,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ShortProductInfoDTO> getAllProducts() {
         List<Product> products = productRepository.findAll();
-        logger.debug("Fetched products: {}", products);
-        return products.stream().map(this::mapToShortInfo).toList();
+        return products.stream()
+                .map(this::mapToShortInfo)
+                .peek(this::setRatingAndReviews) // Set rating and reviews
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -110,6 +113,19 @@ public class ProductServiceImpl implements ProductService {
     public void saveProduct(ProductDetailsDTO productDetailsDTO) {
         Product product = modelMapper.map(productDetailsDTO, Product.class);
         productRepository.save(product);
+    }
+    private void setRatingAndReviews(ShortProductInfoDTO product) {
+        List<ReviewDTO> reviews = reviewClient.getReviewsByProductId(product.getId());
+        product.setNumberOfReviews(reviews.size());
+        if (!reviews.isEmpty()) {
+            double averageRating = reviews.stream()
+                    .mapToInt(ReviewDTO::getRating)
+                    .average()
+                    .orElse(0.0);
+            product.setRating(averageRating);
+        } else {
+            product.setRating(0.0);
+        }
     }
 
     private ShortProductInfoDTO mapToShortInfo(Product product) {

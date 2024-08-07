@@ -7,9 +7,7 @@ import com.example.guitarzone.repositories.UserRepository;
 import com.example.guitarzone.service.WishlistService;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,19 +21,25 @@ public class WishlistServiceImpl implements WishlistService {
     }
 
     @Override
-    public Set<Product> getWishlistItems(Long userId) {
+    public List<Product> getWishlistItems(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         return user.getWishlist().stream()
                 .sorted(Comparator.comparing(Product::getName))
-                .collect(Collectors.toCollection(LinkedHashSet::new));
+                .collect(Collectors.toCollection(LinkedList::new));
     }
 
     @Override
-    public void addToWishlist(Long userId, Long productId) {
+    public boolean addToWishlist(Long userId, Long productId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
         Product product = productRepository.findById(productId).orElseThrow(() -> new IllegalArgumentException("Product not found"));
-        user.getWishlist().add(product);
-        userRepository.save(user);
+
+        if (user.getWishlist().contains(product)) {
+            return false;
+        } else {
+            user.getWishlist().add(product);
+            userRepository.save(user);
+            return true;
+        }
     }
 
     @Override

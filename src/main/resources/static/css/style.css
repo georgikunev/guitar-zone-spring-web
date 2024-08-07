@@ -438,6 +438,10 @@ a:focus {
     background-color: #f89646;
 }
 
+.update-phone .btn-secondary {
+    color: #6bb7be;
+}
+
 .guitar_section .box {
     margin-top: 45px;
     background-color: #f7fafa;
@@ -549,17 +553,102 @@ a:focus {
     color: #fff;
 }
 
-.guitar_section .box .detail-box .action_buttons .btn-secondary {
-    background-color: #f7f7f7;
-    color: #888;
-}
-
-.guitar_section .box .detail-box .action_buttons .btn-secondary .fa {
-    color: #888;
-}
-
 .guitar_section .box .detail-box .guitar-type {
     color: #0c0c0c;
+}
+.action_buttons .btn-secondary {
+    background-color: #f7f7f7;
+}
+
+/* Wishlist Section Styling */
+.wishlist_section .box {
+    margin-top: 45px;
+    background-color: #f7fafa;
+    padding: 25px;
+    border-radius: 5px;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.wishlist_section .box .img-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 275px;
+    padding: 25px;
+    position: relative;
+}
+
+.wishlist_section .box .img-box img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.wishlist_section .box .img-box .deal-label {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 3px;
+}
+
+.wishlist_section .box .detail-box {
+    margin-top: 15px;
+}
+
+.wishlist_section .box .detail-box h5 {
+    text-transform: uppercase;
+    font-size: 18px;
+}
+
+.wishlist_section .box .detail-box p {
+    font-size: 14px;
+}
+
+.wishlist_section .box .detail-box .price_box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.wishlist_section .box .detail-box .price_box .price_heading {
+    font-size: 20px;
+}
+
+.wishlist_section .box .detail-box .price_box .price_heading .original_price {
+    color: #000000;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.wishlist_section .box .detail-box .action_buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.wishlist_section .box .detail-box .action_buttons .btn {
+    font-size: 14px;
+    padding: 5px 10px;
+}
+
+.wishlist_section .box .detail-box .guitar-type {
+    color: #0c0c0c;
+}
+.wishlist_section .stock_status {
+    margin-top: 15px;
+}
+
+.btn-heart-grey .fa-heart {
+    color: #888;
+}
+
+.btn-heart-red .fa-heart {
+    color: red;
 }
 
 .about_section {
@@ -570,6 +659,8 @@ a:focus {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
+    margin-top: 145px;
+    margin-bottom: 545px;
 }
 
 .about_section .img-box img {
@@ -1362,21 +1453,18 @@ body:not(.about-page) .footer_section {
     text-decoration: none;
     color: #fff;
 }
-
-.btn-primary {
-    background-color: #007bff;
+.add-all-cart {
+    text-align: center;
+    margin-top: 30px;
 }
 
-.btn-primary:hover {
-    background-color: #0056b3;
+.add-all-cart .btn-primary {
+    background-color: #6bb7be;
+
 }
 
-.btn-secondary {
-    background-color: #6c757d;
-}
-
-.btn-secondary:hover {
-    background-color: #5a6268;
+.add-all-cart .btn-primary:hover {
+    background-color: #509da2;
 }
 
 .product-item {
@@ -1591,11 +1679,6 @@ body:not(.about-page) .footer_section {
 .product_details_section .action_buttons .btn-primary {
     background-color: #6bb7be;
     color: #fff;
-}
-
-.product_details_section .action_buttons .btn-secondary {
-    background-color: #f7f7f7;
-    color: #888;
 }
 
 .review-section {

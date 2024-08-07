@@ -1,5 +1,6 @@
 package com.example.guitarzone.controllers;
 
+import com.example.guitarzone.components.ReviewClient;
 import com.example.guitarzone.model.dtos.ProductDetailsDTO;
 import com.example.guitarzone.service.ProductService;
 import org.springframework.stereotype.Controller;
@@ -12,9 +13,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class AdminProductController {
 
     private final ProductService productService;
+    private final ReviewClient reviewClient;
 
-    public AdminProductController(ProductService productService) {
+    public AdminProductController(ProductService productService, ReviewClient reviewClient) {
         this.productService = productService;
+        this.reviewClient = reviewClient;
     }
 
     @GetMapping
@@ -28,18 +31,19 @@ public class AdminProductController {
         model.addAttribute("product", productService.getProductDetails(id));
         return "edit-product";
     }
-    //TODO Prevent reviews from getting deleted when updating products
+
     @PostMapping("/update")
     public String updateProduct(@ModelAttribute ProductDetailsDTO productDetailsDTO) {
         productService.updateProduct(productDetailsDTO);
         return "redirect:/admin/products";
     }
-    //TODO Deal with orders interference
+
     @PostMapping("/remove")
     public String removeProduct(@RequestParam Long id, RedirectAttributes redirectAttributes) {
         try {
+            reviewClient.deleteReviewsByProductId(id);
             productService.removeProduct(id);
-            redirectAttributes.addFlashAttribute("successMessage", "Product removed successfully");
+            redirectAttributes.addFlashAttribute("successMessage", "Product and associated reviews removed successfully");
         } catch (IllegalStateException e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
         }

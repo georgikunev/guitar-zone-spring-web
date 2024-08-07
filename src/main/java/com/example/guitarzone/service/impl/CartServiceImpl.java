@@ -128,6 +128,12 @@ public class CartServiceImpl implements CartService {
         });
     }
 
+    @Override
+    public boolean isCartEmpty(Long userId) {
+        Cart cart = getCartEntityByUserId(userId);
+        return cart.getItems().isEmpty();
+    }
+
     private CartItem findCartItemById(Cart cart, Long itemId) {
         return cart.getItems().stream()
                 .filter(cartItem -> cartItem.getId().equals(itemId))

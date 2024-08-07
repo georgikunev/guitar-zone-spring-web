@@ -9,14 +9,14 @@
 <!-- end header section -->
 <div class="login-container">
     <div class="login-box">
-        <h2>Login</h2>
+        <h2 th:text="#{login.title}">Login</h2>
         <form th:action="@{/users/login}" method="post">
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <button type="submit">Login</button>
+            <input type="email" name="email" th:placeholder="#{login.emailPlaceholder}" required>
+            <input type="password" name="password" th:placeholder="#{login.passwordPlaceholder}" required>
+            <button type="submit" th:text="#{login.button}">Login</button>
         </form>
         <div th:if="${param.error}">
-            <p class="error">Invalid email or password</p>
+            <p class="error" th:text="#{login.error}">Invalid email or password</p>
         </div>
     </div>
 </div>

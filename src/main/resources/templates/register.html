@@ -1,70 +1,58 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head}">
-
-
+    <title th:text="#{register.title}">Register</title>
 </head>
 <body>
 
-<!-- header section strats -->
-<header class="header_section long_section px-0" th:replace="~{fragments/navbar}">
-
-</header>
+<!-- header section starts -->
+<header class="header_section long_section px-0" th:replace="~{fragments/navbar}"></header>
 <!-- end header section -->
-
 
 <div class="register-container">
     <div class="register-box">
-        <h2>Register</h2>
-        <form th:action="@{/users/register}"
-              th:object="${registerData}"
-              method="post">
+        <h2 th:text="#{register.heading}">Register</h2>
+        <form th:action="@{/users/register}" th:object="${registerData}" method="post">
             <div>
-                <label for="firstName">First Name:</label>
+                <label for="firstName" th:text="#{register.firstName}">First Name:</label>
                 <input type="text" id="firstName" th:field="*{firstName}" required>
                 <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
             </div>
 
             <div>
-                <label for="lastName">Last Name:</label>
+                <label for="lastName" th:text="#{register.lastName}">Last Name:</label>
                 <input type="text" id="lastName" th:field="*{lastName}" required>
                 <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
             </div>
 
             <div>
-                <label for="email">Email:</label>
+                <label for="email" th:text="#{register.email}">Email:</label>
                 <input type="email" id="email" th:field="*{email}" required>
                 <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
             </div>
 
             <div>
-                <label for="password">Password:</label>
+                <label for="password" th:text="#{register.password}">Password:</label>
                 <input type="password" id="password" th:field="*{password}" required>
                 <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
             </div>
 
             <div>
-                <label for="confirmPassword">Confirm Password:</label>
+                <label for="confirmPassword" th:text="#{register.confirmPassword}">Confirm Password:</label>
                 <input type="password" id="confirmPassword" th:field="*{confirmPassword}" required>
                 <div th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></div>
-                <div th:if="${#fields.hasErrors('password') and #fields.hasErrors('confirmPassword')}" class="error">
+                <div th:if="${#fields.hasErrors('password') and #fields.hasErrors('confirmPassword')}" class="error" th:text="#{register.passwordsDoNotMatch}">
                     Passwords do not match.
                 </div>
             </div>
 
-            <button type="submit">Register</button>
+            <button type="submit" th:text="#{register.button}">Register</button>
         </form>
     </div>
 </div>
 
-<section class="info_section long_section" th:replace="~{fragments/info}">
-
-</section>
-
-<footer class="footer_section" th:replace="~{fragments/footer}">
-
-</footer>
-
+<section class="info_section long_section" th:replace="~{fragments/info}"></section>
+<footer class="footer_section" th:replace="~{fragments/footer}"></footer>
 <div th:replace="~{fragments/script}"></div>
 
 </body>

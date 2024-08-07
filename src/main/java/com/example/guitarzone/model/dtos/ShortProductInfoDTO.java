@@ -1,5 +1,6 @@
 package com.example.guitarzone.model.dtos;
 
+
 public class ShortProductInfoDTO {
     private long id;
     private String name;
@@ -8,6 +9,8 @@ public class ShortProductInfoDTO {
     private String stockStatus;
     private Double rating;
     private String imageUrl;
+    private boolean inWishlist;
+    private Integer numberOfReviews;
 
     public ShortProductInfoDTO() {
     }
@@ -66,5 +69,19 @@ public class ShortProductInfoDTO {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public boolean isInWishlist() {
+        return inWishlist;
+    }
+    public void setInWishlist(boolean inWishlist) {
+        this.inWishlist = inWishlist;
+    }
+
+    public Integer getNumberOfReviews() {
+        return numberOfReviews;
+    }
+    public void setNumberOfReviews(Integer numberOfReviews) {
+        this.numberOfReviews = numberOfReviews;
     }
 }

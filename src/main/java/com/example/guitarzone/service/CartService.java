@@ -12,5 +12,6 @@ public interface CartService {
     void decrementCartItem(Long userId, Long itemId);
     void updateCartTotal(Cart cart);
     Cart getCartEntityByUserId(Long userId);
+    boolean isCartEmpty(Long userId);
 
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head}">
-    <title>Manage Orders</title>
+    <title th:text="#{manageOrders.title}">Manage Orders</title>
 </head>
 <body class="sub_page">
 
@@ -12,7 +12,7 @@
 <section class="order_management_section layout_padding">
     <div class="container">
         <div class="heading_container">
-            <h2>Manage Orders</h2>
+            <h2 th:text="#{manageOrders.heading}">Manage Orders</h2>
         </div>
         <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
         <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
@@ -21,12 +21,12 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Order ID</th>
-                        <th>Customer</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                        <th>Total</th>
-                        <th>Actions</th>
+                        <th th:text="#{manageOrders.orderId}">Order ID</th>
+                        <th th:text="#{manageOrders.customer}">Customer</th>
+                        <th th:text="#{manageOrders.date}">Date</th>
+                        <th th:text="#{manageOrders.status}">Status</th>
+                        <th th:text="#{manageOrders.total}">Total</th>
+                        <th th:text="#{manageOrders.actions}">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -38,19 +38,19 @@
                             <form th:action="@{/admin/orders/update-status}" method="post" style="display:inline;">
                                 <input type="hidden" name="orderId" th:value="${order.id}">
                                 <select name="status" onchange="this.form.submit()">
-                                    <option th:value="Pending" th:selected="${order.status == 'Pending'}">Pending</option>
-                                    <option th:value="Shipped" th:selected="${order.status == 'Shipped'}">Shipped</option>
-                                    <option th:value="Delivered" th:selected="${order.status == 'Delivered'}">Delivered</option>
-                                    <option th:value="Canceled" th:selected="${order.status == 'Canceled'}">Canceled</option>
+                                    <option th:value="Pending" th:text="#{order.status.pending}" th:selected="${order.status == 'Pending'}">Pending</option>
+                                    <option th:value="Shipped" th:text="#{order.status.shipped}" th:selected="${order.status == 'Shipped'}">Shipped</option>
+                                    <option th:value="Delivered" th:text="#{order.status.delivered}" th:selected="${order.status == 'Delivered'}">Delivered</option>
+                                    <option th:value="Canceled" th:text="#{order.status.canceled}" th:selected="${order.status == 'Canceled'}">Canceled</option>
                                 </select>
                             </form>
                         </td>
                         <td th:text="${order.totalAmount}">100.00</td>
                         <td>
-                            <a th:href="@{/admin/orders/details/{id}(id=${order.id})}" class="btn btn-info">Details</a>
+                            <a th:href="@{/admin/orders/details/{id}(id=${order.id})}" class="btn btn-info" th:text="#{manageOrders.detailsButton}">Details</a>
                             <form th:action="@{/admin/orders/delete}" method="post" style="display:inline;">
                                 <input type="hidden" name="orderId" th:value="${order.id}">
-                                <button type="submit" class="btn btn-danger">Delete</button>
+                                <button type="submit" class="btn btn-danger" th:text="#{manageOrders.deleteButton}">Delete</button>
                             </form>
                         </td>
                     </tr>

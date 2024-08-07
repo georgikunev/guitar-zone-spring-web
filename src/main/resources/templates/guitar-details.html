@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head}">
+    <title th:text="#{guitarDetails.title}">Guitar Details</title>
 </head>
 <body class="sub_page">
 
@@ -33,19 +34,29 @@
                         <span class="star"></span>
                         <span class="star"></span>
                         <span class="star"></span>
-                        <span class="rating-value" th:text="'(' + ${productDetails.numberOfReviews} + ' reviews)'"></span>
+                        <span class="rating-value" th:text="'(' + ${productDetails.numberOfReviews} + ' ' + #{guitarDetails.reviews} + ')'"></span>
                     </div>
 
                     <div class="price-box">
                         <h6 class="price_heading"><span class="original_price" th:text="*{price}">£</span></h6>
-                        <p class="stock_status"><i class="fa fa-check-circle" th:text="*{stockStatus}"></i></p>
+                        <p class="stock_status"
+                           th:classappend="${productDetails.stockStatus == 'out of stock'} ? 'out-of-stock' : ''"
+                           th:text="*{stockStatus}"></p>
                     </div>
 
                     <div class="action_buttons">
-                        <a href="" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Cart</a>
+                        <form th:action="@{/cart/add}" method="post">
+                            <input type="hidden" name="productId" th:value="${productDetails.id}">
+                            <input type="hidden" name="quantity" value="1">
+                            <button type="submit" class="btn btn-primary"
+                                    th:classappend="${productDetails.stockStatus == 'out of stock'} ? 'btn-disabled' : ''"
+                                    th:disabled="${productDetails.stockStatus == 'out of stock'}">
+                                <i class="fa fa-shopping-cart"></i> <span th:text="#{guitarDetails.addToCart}">Add To Cart</span>
+                            </button>
+                        </form>
                         <form th:action="@{/users/wishlist/add}" method="post">
                             <input type="hidden" name="productId" th:value="${productDetails.id}">
-                            <button type="submit" class="btn btn-secondary">
+                            <button type="submit" th:classappend="${productDetails.inWishlist} ? 'btn-heart-red' : 'btn-heart-grey'" class="btn btn-secondary">
                                 <i class="fa fa-heart"></i> <!-- Adding the Font Awesome heart icon -->
                             </button>
                         </form>
@@ -56,17 +67,16 @@
 
         <!-- Full description section -->
         <div class="full-description" id="fullDescription">
-            <h3>Description</h3>
+            <h3 th:text="#{guitarDetails.descriptionTitle}">Description</h3>
             <p th:text="*{description}">Full guitar description</p>
         </div>
 
         <!-- Add review section -->
-        <!-- Add review section -->
         <div class="review-section">
-            <h3>Add a Review</h3>
+            <h3 th:text="#{guitarDetails.addReviewTitle}">Add a Review</h3>
             <form th:action="@{/guitars/{id}/reviews/add(id=${productDetails.id})}" method="post">
                 <div class="form-group">
-                    <label for="rating">Rating</label>
+                    <label for="rating" th:text="#{guitarDetails.ratingLabel}">Rating</label>
                     <select id="rating" name="rating" class="form-control">
                         <option value="5">5</option>
                         <option value="4">4</option>
@@ -76,21 +86,20 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="comment">Comment</label>
+                    <label for="comment" th:text="#{guitarDetails.commentLabel}">Comment</label>
                     <textarea id="comment" name="comment" class="form-control" rows="4"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit Review</button>
+                <button type="submit" class="btn btn-primary" th:text="#{guitarDetails.submitReviewButton}">Submit Review</button>
             </form>
         </div>
 
-
         <!-- Display existing reviews -->
         <div class="reviews-section">
-            <h3>Reviews</h3>
+            <h3 th:text="#{guitarDetails.reviewsTitle}">Reviews</h3>
             <div th:each="review : ${productDetails.reviews}">
                 <div class="review">
                     <div class="review-header">
-                        <span class="review-rating" th:text="'Rating: ' + ${review.rating} + ' / 5'"></span>
+                        <span class="review-rating" th:text="#{guitarDetails.ratingPrefix} + ' ' + ${review.rating} + ' / 5'"></span>
                         <span class="review-user" th:text="${review.fullName}"></span>
                         <span class="review-date" th:text="${#dates.format(review.createdDate, 'dd-MM-yyyy')}"></span>
                     </div>

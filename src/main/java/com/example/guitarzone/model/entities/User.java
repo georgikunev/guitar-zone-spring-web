@@ -44,12 +44,12 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
-    private Set<Product> wishlist;
+    private List<Product> wishlist;
 
     public User() {
         this.orders = new ArrayList<>();
         this.roles = new HashSet<>();
-        this.wishlist = new HashSet<>();
+        this.wishlist = new ArrayList<>();
         this.cart = new Cart();
         this.cart.setUser(this);
     }
@@ -124,11 +124,11 @@ public class User {
         this.cart = cart;
     }
 
-    public Set<Product> getWishlist() {
+    public List<Product> getWishlist() {
         return wishlist;
     }
 
-    public void setWishlist(Set<Product> wishlist) {
+    public void setWishlist(List<Product> wishlist) {
         this.wishlist = wishlist;
     }
 

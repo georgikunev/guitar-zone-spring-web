@@ -1,139 +1,122 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th = "http://www.thymeleaf.org">
-<head th:replace="~{fragments/head}">
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"></head>
 
 <body>
 
-  <div class="hero_area">
-    <!-- header section strats -->
-    <header class="header_section long_section px-0" th:replace="~{fragments/navbar}">
-
-    </header>
-    <!-- end header section -->
-    <!-- slider section -->
-    <section class="slider_section long_section">
-      <div id="customCarousel" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <div class="container ">
-              <div class="row">
-                <div class="col-md-5">
-                  <div class="detail-box">
-                    <h1>
-                      For All Your <br>
-                      Musical Needs
-                    </h1>
-                    <p>
-                      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus quidem maiores perspiciatis, illo maxime voluptatem a itaque suscipit.
-                    </p>
-                    <div class="btn-box">
-                      <a href="" class="btn1">
-                        Contact Us
-                      </a>
-                      <a href="" class="btn2">
-                        About Us
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-7">
-                  <div class="img-box">
-                    <img src="images/guitar-slider-bg1.jpg" alt="">
+<div class="hero_area">
+  <!-- header section starts -->
+  <header class="header_section long_section px-0" th:replace="~{fragments/navbar}">
+  </header>
+  <!-- end header section -->
+  <!-- slider section -->
+  <section class="slider_section long_section">
+    <div id="customCarousel" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="container ">
+            <div class="row">
+              <div class="col-md-5">
+                <div class="detail-box">
+                  <h1 th:text="#{index.slider.heading}">
+                    For All Your <br>
+                    Musical Needs
+                  </h1>
+                  <p th:text="#{index.slider.description}">
+                    Discover the best guitars for every skill level and style at GuitarZone. Find your perfect instrument and start making music today.
+                  </p>
+                  <div class="btn-box">
+                    <a th:href="@{/contact}" class="btn1" th:text="#{index.slider.contactUs}">Contact Us</a>
+                    <a th:href="@{/about}" class="btn2" th:text="#{index.slider.aboutUs}">About Us</a>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div class="container ">
-              <div class="row">
-                <div class="col-md-5">
-                  <div class="detail-box">
-                    <h1>
-                      For All Your <br>
-                      Musical Needs
-                    </h1>
-                    <p>
-                      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus quidem maiores perspiciatis, illo maxime voluptatem a itaque suscipit.
-                    </p>
-                    <div class="btn-box">
-                      <a href="" class="btn1">
-                        Contact Us
-                      </a>
-                      <a href="" class="btn2">
-                        About Us
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-7">
-                  <div class="img-box">
-                    <img src="images/guitar-slider-bg2.jpg" alt="">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div class="container ">
-              <div class="row">
-                <div class="col-md-5">
-                  <div class="detail-box">
-                    <h1>
-                      For All Your <br>
-                      Musical Needs
-                    </h1>
-                    <p>
-                      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus quidem maiores perspiciatis, illo maxime voluptatem a itaque suscipit.
-                    </p>
-                    <div class="btn-box">
-                      <a href="" class="btn1">
-                        Contact Us
-                      </a>
-                      <a href="" class="btn2">
-                        About Us
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-7">
-                  <div class="img-box">
-                    <img src="images/guitar-slider-bg3.avif" alt="">
-                  </div>
+              <div class="col-md-7">
+                <div class="img-box">
+                  <img src="images/guitar-slider-bg1.jpg" alt="Guitar Image 1">
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <ol class="carousel-indicators">
-          <li data-target="#customCarousel" data-slide-to="0" class="active"></li>
-          <li data-target="#customCarousel" data-slide-to="1"></li>
-          <li data-target="#customCarousel" data-slide-to="2"></li>
-        </ol>
+        <div class="carousel-item">
+          <div class="container ">
+            <div class="row">
+              <div class="col-md-5">
+                <div class="detail-box">
+                  <h1 th:text="#{index.slider.heading}">
+                    For All Your <br>
+                    Musical Needs
+                  </h1>
+                  <p th:text="#{index.slider.description}">
+                    Discover the best guitars for every skill level and style at GuitarZone. Find your perfect instrument and start making music today.
+                  </p>
+                  <div class="btn-box">
+                    <a th:href="@{/contact}" class="btn1" th:text="#{index.slider.contactUs}">Contact Us</a>
+                    <a th:href="@{/about}" class="btn2" th:text="#{index.slider.aboutUs}">About Us</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7">
+                <div class="img-box">
+                  <img src="images/guitar-slider-bg2.jpg" alt="Guitar Image 2">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="container ">
+            <div class="row">
+              <div class="col-md-5">
+                <div class="detail-box">
+                  <h1 th:text="#{index.slider.heading}">
+                    For All Your <br>
+                    Musical Needs
+                  </h1>
+                  <p th:text="#{index.slider.description}">
+                    Discover the best guitars for every skill level and style at GuitarZone. Find your perfect instrument and start making music today.
+                  </p>
+                  <div class="btn-box">
+                    <a th:href="@{/contact}" class="btn1" th:text="#{index.slider.contactUs}">Contact Us</a>
+                    <a th:href="@{/about}" class="btn2" th:text="#{index.slider.aboutUs}">About Us</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7">
+                <div class="img-box">
+                  <img src="images/guitar-slider-bg3.avif" alt="Guitar Image 3">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </section>
-    <!-- end slider section -->
-  </div>
+      <ol class="carousel-indicators">
+        <li data-target="#customCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#customCarousel" data-slide-to="1"></li>
+        <li data-target="#customCarousel" data-slide-to="2"></li>
+      </ol>
+    </div>
+  </section>
+  <!-- end slider section -->
+</div>
 
-  <!-- furniture section -->
-
-
-  <!-- info section -->
-
-    <section class="info_section long_section" th:replace="~{fragments/info}">
-
-
-    </section>
-
-  <!-- end info_section -->
+<!-- furniture section -->
 
 
-  <!-- footer section -->
-  <footer class="footer_section" th:replace="~{fragments/footer}"> </footer>
-  <!-- footer section -->
+<!-- info section -->
 
-<div th:replace="~{fragments/script}"> </div>
+<section class="info_section long_section" th:replace="~{fragments/info}"></section>
+
+<!-- end info_section -->
+
+
+<!-- footer section -->
+<footer class="footer_section" th:replace="~{fragments/footer}"></footer>
+<!-- footer section -->
+
+<div th:replace="~{fragments/script}"></div>
 
 </body>
 

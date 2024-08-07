@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -31,7 +32,8 @@ public class OrderController {
     }
 
     @PostMapping("/checkout")
-    public String placeOrder(@Valid @ModelAttribute("orderDTO") OrderDTO orderDTO, BindingResult bindingResult, @AuthenticationPrincipal UserDetails userDetails, Model model) {
+    public String placeOrder(@Valid @ModelAttribute("orderDTO") OrderDTO orderDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, @AuthenticationPrincipal UserDetails userDetails, Model model) {
+
         if (bindingResult.hasErrors()) {
             Long userId = userService.findByEmail(userDetails.getUsername()).getId();
             CartDTO cart = cartService.getCartByUserId(userId);
@@ -40,7 +42,12 @@ public class OrderController {
             return "checkout";
         }
 
+
         Long userId = userService.findByEmail(userDetails.getUsername()).getId();
+        if (cartService.isCartEmpty(userId)) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Your cart is empty. Please add items to your cart before proceeding to checkout.");
+            return "redirect:/cart";
+        }
         orderService.placeOrder(orderDTO, userId);
 
         model.addAttribute("orderConfirmation", "Your order has been placed successfully!");
@@ -48,12 +55,16 @@ public class OrderController {
     }
 
     @GetMapping("/checkout")
-    public String showCheckoutPage(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+    public String showCheckoutPage(@AuthenticationPrincipal UserDetails userDetails, Model model, RedirectAttributes redirectAttributes) {
         Long userId = userService.findByEmail(userDetails.getUsername()).getId();
         CartDTO cart = cartService.getCartByUserId(userId);
         model.addAttribute("cart", cart);
         model.addAttribute("isCartEmpty", cart.getItems().isEmpty());
         model.addAttribute("orderDTO", new OrderDTO());
+        if (cartService.isCartEmpty(userId)) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Your cart is empty. Please add items to your cart before proceeding to checkout.");
+            return "redirect:/cart";
+        }
         return "checkout";
     }
 

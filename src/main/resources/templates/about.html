@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head th:replace="~{fragments/head}"></head>
-
 <body class="sub_page">
 
 <div class="hero_area">
     <header class="header_section long_section px-0" th:replace="~{fragments/navbar}"></header>
-
 </div>
 
 <section class="about_section layout_padding long_section">
@@ -21,21 +18,46 @@
             <div class="col-md-6">
                 <div class="detail-box">
                     <div class="heading_container">
-                        <h2>
-                            About Us
-                        </h2>
+                        <h2 th:text="#{about.title}">About Us</h2>
                     </div>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti dolorem eum consequuntur ipsam
-                        repellat dolor soluta aliquid laborum, eius odit consectetur vel quasi in quidem, eveniet ab est
-                        corporis tempore.
+                    <p th:text="#{about.description}">
+                        Welcome to Guitar Zone, your number one source for all things guitars. We're dedicated to providing you the very best of guitars, with an emphasis on quality, customer service, and uniqueness.
                     </p>
-                    <a href="">
-                        Read More
-                    </a>
+                    <a href="#more-details" class="btn btn-primary" th:text="#{about.readMore}">Read More</a>
                 </div>
             </div>
         </div>
+    </div>
+</section>
+
+<!-- Full description section -->
+<section id="more-details" class="full-description layout_padding long_section" style="margin-top: 200px">
+    <div class="container">
+        <div class="heading_container">
+            <h2 th:text="#{about.storyTitle}">Our Story</h2>
+        </div>
+        <p th:text="#{about.story1}">
+            Established in 2021, Guitar Zone has come a long way from its beginnings in a home office. When we first started out, our passion for "music and instruments" drove us to start our own business. We now serve customers all over the world and are thrilled that we're able to turn our passion into our own website.
+        </p>
+        <p th:text="#{about.story2}">
+            At Guitar Zone, we believe in offering guitars that are not only high in quality but also unique in their own way. Our selection ranges from classic acoustic guitars to modern electric guitars, ensuring that there is something for every musician out there. Each guitar is carefully selected and tested to meet our high standards before being added to our collection.
+        </p>
+        <p th:text="#{about.story3}">
+            Customer satisfaction is at the core of our business. We strive to provide exceptional customer service and support. Whether you are a beginner looking for your first guitar or a seasoned musician in search of a new instrument, we are here to assist you every step of the way. Our knowledgeable staff is always ready to answer your questions and help you make the best choice.
+        </p>
+        <p th:text="#{about.story4}">
+            We also believe in giving back to the community. Guitar Zone regularly participates in local music events and charity programs. We believe that music has the power to bring people together and make a positive impact on society. Through our initiatives, we aim to support budding musicians and foster a love for music in the community.
+        </p>
+        <p th:text="#{about.story5}">
+            In addition to selling guitars, we offer a range of accessories and services to enhance your playing experience. From strings and picks to maintenance and repair services, Guitar Zone is your one-stop shop for all your guitar needs. We also offer music lessons for all levels, taught by experienced instructors who are passionate about teaching and music.
+        </p>
+        <p th:text="#{about.story6}">
+            Our mission is to inspire and support musicians of all levels by providing high-quality guitars, exceptional service, and a love for music. We are committed to continuous improvement and always welcome feedback from our customers. Thank you for choosing Guitar Zone, and we look forward to being a part of your musical journey.
+        </p>
+        <p th:text="#{about.signature}">
+            Sincerely, <br>
+            Guitar Zone Team
+        </p>
     </div>
 </section>
 
@@ -46,5 +68,16 @@
 <footer class="footer_section" th:replace="~{fragments/footer}"></footer>
 
 <div th:replace="~{fragments/script}"></div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const readMoreButton = document.querySelector('.btn.btn-primary');
+        readMoreButton.addEventListener('click', function (event) {
+            event.preventDefault();
+            document.querySelector('#more-details').scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+</script>
+
 </body>
 </html>

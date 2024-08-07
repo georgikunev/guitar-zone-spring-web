@@ -10,8 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Set;
+import java.util.List;
+
 
 @Controller
 public class WishlistController {
@@ -27,7 +29,7 @@ public class WishlistController {
     @GetMapping("/users/wishlist")
     public String showWishlist(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
         Long userId = userDetails.getId();
-        Set<Product> wishlistItems = wishlistService.getWishlistItems(userId);
+        List<Product> wishlistItems = wishlistService.getWishlistItems(userId);
         model.addAttribute("wishlistItems", wishlistItems);
 
         if (wishlistItems.isEmpty()) {
@@ -38,9 +40,14 @@ public class WishlistController {
     }
 
     @PostMapping("/users/wishlist/add")
-    public String addToWishlist(@RequestParam Long productId, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        wishlistService.addToWishlist(userDetails.getId(), productId);
-        return "redirect:/users/wishlist";
+    public String addToWishlist(@RequestParam Long productId, @AuthenticationPrincipal CustomUserDetails userDetails, RedirectAttributes redirectAttributes) {
+        boolean added = wishlistService.addToWishlist(userDetails.getId(), productId);
+        if (added) {
+            redirectAttributes.addFlashAttribute("successMessage", "Product added to wishlist successfully.");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "Product is already in your wishlist.");
+        }
+        return "redirect:/guitars";
     }
 
     @PostMapping("/users/wishlist/remove")
@@ -53,12 +60,12 @@ public class WishlistController {
     @PostMapping("/users/wishlist/addAllToCart")
     public String addAllToCart(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
         Long userId = userDetails.getId();
-        Set<Product> wishlistItems = wishlistService.getWishlistItems(userId);
+        List<Product> wishlistItems = wishlistService.getWishlistItems(userId);
 
         for (Product product : wishlistItems) {
             if (product.getQuantity() < 1) {
                 model.addAttribute("errorMessage", "Product " + product.getName() + " is out of stock.");
-                Set<Product> updatedWishlistItems = wishlistService.getWishlistItems(userId);
+                List<Product> updatedWishlistItems = wishlistService.getWishlistItems(userId);
                 model.addAttribute("wishlistItems", updatedWishlistItems);
                 return "user-wishlist";
             }

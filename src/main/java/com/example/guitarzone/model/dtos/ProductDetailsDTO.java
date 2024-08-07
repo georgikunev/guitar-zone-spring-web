@@ -1,6 +1,7 @@
 package com.example.guitarzone.model.dtos;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 //TODO Validations
@@ -16,8 +17,10 @@ public class ProductDetailsDTO {
     private String imageUrl;
     private Integer numberOfReviews;
     private List<ReviewDTO> reviews;
+    private boolean inWishlist;
 
     public ProductDetailsDTO() {
+        this.reviews = new ArrayList<>();
     }
 
     public Integer getQuantity() {
@@ -106,5 +109,13 @@ public class ProductDetailsDTO {
 
     public void setReviews(List<ReviewDTO> reviews) {
         this.reviews = reviews;
+    }
+
+    public boolean isInWishlist() {
+        return inWishlist;
+    }
+
+    public void setInWishlist(boolean inWishlist) {
+        this.inWishlist = inWishlist;
     }
 }
